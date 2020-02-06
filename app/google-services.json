@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "953204878554",
+    "firebase_url": "https://agroworld-36ae9.firebaseio.com",
+    "project_id": "agroworld-36ae9",
+    "storage_bucket": "agroworld-36ae9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953204878554:android:c6c6f0b4d14e685e1249e3",
+        "android_client_info": {
+          "package_name": "com.example.dulanjali.agroworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "953204878554-2gesh8dohornol8gfh776697s0v99mt4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dulanjali.agroworld",
+            "certificate_hash": "7657e99ee7faf497d0e52e0d7fc12a5ed2e2307e"
+          }
+        },
+        {
+          "client_id": "953204878554-adfm3f6jmj1g5ht0p7rurnh4b8o2rt2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaJIS2lu-YRWexb8SLuUmZ7SM62pEuSbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "953204878554-adfm3f6jmj1g5ht0p7rurnh4b8o2rt2b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,23 +6,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
-public class Activity_Register extends AppCompatActivity {
+public class Activity_Dashboard extends AppCompatActivity {
 
-    Button login;
+    Button logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity__register);
+        setContentView(R.layout.activity__dashboard);
 
-        login = findViewById(R.id.nav_login);
-        login.setOnClickListener(
+        logout = findViewById(R.id.log_out);
+        logout.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(Activity_Register.this,Activity_Login.class));
+                        startActivity(new Intent(Activity_Dashboard.this,Activity_Login.class));
                     }
                 }
         );

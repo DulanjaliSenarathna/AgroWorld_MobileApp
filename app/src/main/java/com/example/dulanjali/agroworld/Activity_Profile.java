@@ -1,13 +1,14 @@
 package com.example.dulanjali.agroworld;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
-public class Activity_Home extends AppCompatActivity {
+public class Activity_Profile extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity__home);
+        setContentView(R.layout.activity__profile);
     }
 }

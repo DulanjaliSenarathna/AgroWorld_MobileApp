@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreen">
+    tools:context=".SplashScreen"
+    android:background="#fff"
+    >
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="false"
-        android:layout_alignParentTop="false">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <RelativeLayout
 
@@ -18,20 +20,41 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_marginTop="850dp"
-                android:layout_marginLeft="180dp"
                 android:id="@+id/logo"
-                android:layout_width="195dp"
-                android:layout_height="195dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/logo" />
+                android:layout_width="114dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="126dp"
+                android:layout_marginTop="170dp"
+                android:src="@drawable/plantt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="123dp"
+                android:layout_marginTop="280dp"
+                android:fontFamily="@font/font"
+                android:text="AGRO WORLD"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Listen to your crop"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+                android:layout_marginTop="305dp"
+                android:layout_marginLeft="122dp"
+                android:fontFamily="@font/font"/>
+
+
 
 
         </RelativeLayout>
 
 
-
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
 
