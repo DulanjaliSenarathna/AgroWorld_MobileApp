@@ -9,7 +9,8 @@
         android:roundIcon="@drawable/plantt"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity_Profile"></activity>
+        <activity android:name=".Activity_Blog"></activity>
+        <activity android:name=".Activity_Profile" />
         <activity android:name=".Activity_Dashboard" />
         <activity android:name=".Activity_Register" />
         <activity android:name=".SplashScreen">

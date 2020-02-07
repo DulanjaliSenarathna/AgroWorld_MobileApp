@@ -13,19 +13,24 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Activity_Dashboard extends AppCompatActivity {
 
-    Button logout;
-    ImageView updateProfile;
+    private Button logout;
+    private ImageView updateProfile;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__dashboard);
 
+        mAuth = FirebaseAuth.getInstance();
+
         logout = findViewById(R.id.log_out);
         logout.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        logOut();
                         startActivity(new Intent(Activity_Dashboard.this,Activity_Login.class));
                     }
                 }
@@ -42,16 +47,30 @@ public class Activity_Dashboard extends AppCompatActivity {
         );
     }
 
+    private void logOut()
+    {
+        mAuth.signOut();
+        sendToLogin();
+    }
+
+    private void sendToLogin()
+    {
+        Intent intent = new Intent(Activity_Dashboard.this, Activity_Login.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(currentUser==null)
+        if (currentUser == null)
         {
-            Intent intent = new Intent(Activity_Dashboard.this,Activity_Login.class);
-            startActivity(intent);
-            finish();
+            sendToLogin();
         }
     }
+
+
+
 }
