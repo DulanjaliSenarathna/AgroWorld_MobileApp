@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class Activity_Dashboard extends AppCompatActivity {
 
     Button logout;
@@ -37,5 +40,18 @@ public class Activity_Dashboard extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser==null)
+        {
+            Intent intent = new Intent(Activity_Dashboard.this,Activity_Login.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }
