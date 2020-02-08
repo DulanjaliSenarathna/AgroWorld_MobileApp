@@ -94,21 +94,22 @@
             android:orientation="horizontal">
 
             <CheckBox
+                android:id="@+id/remember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="REMEMBER ME"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/colorPrimaryDark"/>
 
-            <Button
+            <TextView
                 android:id="@+id/nav_login"
                 android:layout_width="184dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
+                android:layout_marginLeft="90dp"
                 android:layout_marginTop="20dp"
                 android:text="FORGOT PASSWORD "
                 android:textColor="@color/colorPrimaryDark"
-                app:backgroundTint="#fff" />
+                 />
 
 
         </LinearLayout>

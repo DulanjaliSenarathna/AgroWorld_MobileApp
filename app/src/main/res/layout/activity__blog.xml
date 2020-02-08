@@ -6,4 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".Activity_Blog">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.mancj.materialsearchbar.MaterialSearchBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchBar"
+            android:layout_alignParentTop="true"
+            app:mt_speechMode="false"
+            app:mt_hint="SEARCH POST"/>
+
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
