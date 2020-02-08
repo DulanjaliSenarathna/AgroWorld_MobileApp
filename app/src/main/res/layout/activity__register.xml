@@ -80,6 +80,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/reg_email"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_height="wrap_content">
@@ -123,6 +124,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/reg_button"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

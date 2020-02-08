@@ -32,6 +32,7 @@ public class Activity_Login extends AppCompatActivity {
     private Button register,login;
     private TextInputEditText email,password;
     private CheckBox chkBoxRememberMe;
+    private TextView forgot_password;
 
     private FirebaseAuth mAuth;
 
@@ -53,6 +54,7 @@ public class Activity_Login extends AppCompatActivity {
         password = findViewById(R.id.passwrd);
         loginProgress = findViewById(R.id.progressBar);
         chkBoxRememberMe = findViewById(R.id.remember);
+        forgot_password = findViewById(R.id.forgot_pw);
 
         SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
         String checkbox = preferences.getString("remember","");
@@ -64,7 +66,7 @@ public class Activity_Login extends AppCompatActivity {
 
         else if(checkbox.equals("false"))
         {
-            Toast.makeText(this, "Please Login", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
         }
 
         chkBoxRememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
