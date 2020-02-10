@@ -179,7 +179,7 @@ public class Activity_Login extends AppCompatActivity {
                          String phoneNoFromDB = dataSnapshot.child(userEnteredUsername).child("phoneNo").getValue(String.class);
                          String emailFromDB = dataSnapshot.child(userEnteredUsername).child("email").getValue(String.class);
 
-                         Intent dash = new Intent(Activity_Login.this,Activity_Dashboard.class);
+                         Intent dash = new Intent(Activity_Login.this,Activity_Profile.class);
 
                          dash.putExtra("name",nameFromDB);
                          dash.putExtra("username",usernameFromDB);
