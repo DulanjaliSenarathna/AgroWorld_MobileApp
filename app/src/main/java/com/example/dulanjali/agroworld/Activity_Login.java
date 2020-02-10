@@ -18,9 +18,14 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.Nullable;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,32 +34,28 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Activity_Login extends AppCompatActivity {
 
 
-    private Button register,login;
-    private TextInputEditText email,password;
+    private Button register, login;
+    private TextInputLayout inputUserName, inputPassword;
     private CheckBox chkBoxRememberMe;
     private TextView forgot_password;
 
-    private FirebaseAuth mAuth;
+    private String parentDnName = "users";
 
-    private ProgressBar loginProgress;
-
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity__login);
 
-        mAuth = FirebaseAuth.getInstance();
-
+        inputUserName = findViewById(R.id.id_username);
+        inputPassword = findViewById(R.id.id_password);
+        chkBoxRememberMe = findViewById(R.id.remember);
         register = findViewById(R.id.nav_reg);
         login = findViewById(R.id.btn_login);
-        email = findViewById(R.id.mail);
-        password = findViewById(R.id.passwrd);
-        loginProgress = findViewById(R.id.progressBar);
-        chkBoxRememberMe = findViewById(R.id.remember);
-        forgot_password = findViewById(R.id.forgot_pw);
 
         SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
         String checkbox = preferences.getString("remember","");
@@ -66,7 +67,7 @@ public class Activity_Login extends AppCompatActivity {
 
         else if(checkbox.equals("false"))
         {
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please Login", Toast.LENGTH_SHORT).show();
         }
 
         chkBoxRememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -94,72 +95,119 @@ public class Activity_Login extends AppCompatActivity {
             }
         });
 
-        register.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(Activity_Login.this,Activity_Register.class));
-                    }
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!validateUserName() | !validatePassword() ) {
+                    return;
+
+                } else {
+
+                    isUser();
                 }
-        );
 
-        login.setOnClickListener(
-                new View.OnClickListener() {
+            }
+        });
 
-                   @Override
-                    public void onClick(View v) {
-
-
-                       String loginEmail= email.getText().toString();
-                       String loginPwd= password.getText().toString();
-
-                       if(!TextUtils.isEmpty(loginEmail) && !TextUtils.isEmpty(loginPwd))
-                       {
-                           loginProgress.setVisibility(View.VISIBLE);
-
-                           mAuth.signInWithEmailAndPassword(loginEmail,loginPwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                               @Override
-                               public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                   if(task.isSuccessful())
-                                   {
-                                        sendToMain();
-                                   }
-
-                                   else
-                                   {
-                                       String errorMessage = task.getException().getMessage();
-                                       Toast.makeText(Activity_Login.this, "Error : "+errorMessage,Toast.LENGTH_LONG).show();
-                                   }
-
-                                   loginProgress.setVisibility(View.INVISIBLE);
-
-                               }
-                           });
-                       }
-
-                    }
-                }
-        );
-
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity_Login.this,Activity_Register.class));
+            }
+        });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private Boolean validatePassword()
+    {
+        String val = inputPassword.getEditText().getText().toString();
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        if(currentUser != null)
+        if(val.isEmpty())
         {
-           sendToMain();
+            inputPassword.setError("Field cannot be empty");
+            return false;
+        }
+        else
+        {
+            inputPassword.setError(null);
+            inputPassword.setErrorEnabled(false);
+            return true;
         }
     }
 
-    private void sendToMain()
+    private Boolean validateUserName()
     {
-        Intent mainIntent = new Intent(Activity_Login.this,Activity_Dashboard.class);
-        startActivity(mainIntent);
-        finish();
+        String val = inputUserName.getEditText().getText().toString();
+
+        if(val.isEmpty())
+        {
+            inputUserName.setError("Field cannot be empty");
+            return false;
+        }
+        else
+        {
+            inputUserName.setError(null);
+            inputUserName.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private void isUser() {
+        final String userEnteredUsername = inputUserName.getEditText().getText().toString().trim();
+        final String userEnteredPassword = inputPassword.getEditText().getText().toString().trim();
+
+        reference = FirebaseDatabase.getInstance().getReference().child("users");
+
+        Query checkUser = reference.orderByChild("username").equalTo(userEnteredUsername);
+         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                 if(dataSnapshot.exists())
+                 {
+                     inputUserName.setError(null);
+                     inputUserName.setErrorEnabled(false);
+
+                     String passwordFromDB = dataSnapshot.child(userEnteredUsername).child("password").getValue(String.class);
+
+                     if(passwordFromDB.equals(userEnteredPassword))
+                     {
+                         inputUserName.setError(null);
+                         inputUserName.setErrorEnabled(false);
+
+                         String nameFromDB = dataSnapshot.child(userEnteredUsername).child("name").getValue(String.class);
+                         String usernameFromDB = dataSnapshot.child(userEnteredUsername).child("username").getValue(String.class);
+                         String phoneNoFromDB = dataSnapshot.child(userEnteredUsername).child("phoneNo").getValue(String.class);
+                         String emailFromDB = dataSnapshot.child(userEnteredUsername).child("email").getValue(String.class);
+
+                         Intent dash = new Intent(Activity_Login.this,Activity_Dashboard.class);
+
+                         dash.putExtra("name",nameFromDB);
+                         dash.putExtra("username",usernameFromDB);
+                         dash.putExtra("email",emailFromDB);
+                         dash.putExtra("phoneNo",phoneNoFromDB);
+                         dash.putExtra("password",passwordFromDB);
+
+                         startActivity(dash);
+                     }
+                     else
+                     {
+                         inputPassword.setError("Wrong Password");
+                         inputPassword.requestFocus();
+                     }
+                 }
+
+                 else
+                 {
+                     inputUserName.setError("No such user exist");
+                     inputUserName.requestFocus();
+                 }
+             }
+
+             @Override
+             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+             }
+         });
+
     }
 }

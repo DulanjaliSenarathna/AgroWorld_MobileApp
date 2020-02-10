@@ -68,7 +68,6 @@ public class Activity_Dashboard extends AppCompatActivity {
 
     private void logOut()
     {
-        mAuth.signOut();
         sendToLogin();
     }
 
@@ -78,18 +77,5 @@ public class Activity_Dashboard extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null)
-        {
-            sendToLogin();
-        }
-    }
-
-
 
 }

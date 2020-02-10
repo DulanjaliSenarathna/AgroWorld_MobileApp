@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Activity_Register extends AppCompatActivity {
 
     Button btnLogin;
-    TextInputLayout regName,regUserName,regEmail,regPhoneNo,regPassword;
+    TextInputLayout inputName,inputUserName,inputEmail,inputPhoneNo,inputPassword;
     MaterialButton btnRegister;
 
     FirebaseDatabase rootNode;
@@ -28,11 +28,11 @@ public class Activity_Register extends AppCompatActivity {
         setContentView(R.layout.activity__register);
 
         btnLogin = findViewById(R.id.nav_login);
-        regName = findViewById(R.id.reg_fullname);
-        regUserName = findViewById(R.id.reg_username);
-        regEmail = findViewById(R.id.reg_email);
-        regPhoneNo = findViewById(R.id.reg_phone);
-        regPassword = findViewById(R.id.reg_password);
+        inputName = findViewById(R.id.reg_fullname);
+        inputUserName = findViewById(R.id.reg_username);
+        inputEmail = findViewById(R.id.reg_email);
+        inputPhoneNo = findViewById(R.id.reg_phone);
+        inputPassword = findViewById(R.id.reg_password);
         btnRegister = findViewById(R.id.reg_button);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -47,15 +47,15 @@ public class Activity_Register extends AppCompatActivity {
                 rootNode = FirebaseDatabase.getInstance();
                 reference = rootNode.getReference("users");
 
-                String name = regName.getEditText().getText().toString();
-                String userName = regUserName.getEditText().getText().toString();
-                String email = regEmail.getEditText().getText().toString();
-                String phoneNo = regPhoneNo.getEditText().getText().toString();
-                String password = regPassword.getEditText().getText().toString();
+                String name = inputName.getEditText().getText().toString();
+                String username = inputUserName.getEditText().getText().toString();
+                String email = inputEmail.getEditText().getText().toString();
+                String phoneNo = inputPhoneNo.getEditText().getText().toString();
+                String password = inputPassword.getEditText().getText().toString();
 
-                UserHelperClass helperClass = new UserHelperClass(name,userName,email,phoneNo,password);
+                UserHelperClass helperClass = new UserHelperClass(name,username,email,phoneNo,password);
 
-                reference.child(phoneNo).setValue(helperClass);
+                reference.child(username).setValue(helperClass);
 
             }
         });
@@ -72,91 +72,103 @@ public class Activity_Register extends AppCompatActivity {
 
     private Boolean validateName()
     {
-        String val = regName.getEditText().getText().toString();
+
+        String val = inputName.getEditText().getText().toString();
 
         if(val.isEmpty())
         {
-            regName.setError("Field cannot be empty");
+            inputName.setError("Field cannot be empty");
             return false;
         }
         else
         {
-            regName.setError(null);
-            regName.setErrorEnabled(false);
+            inputName.setError(null);
+            inputName.setErrorEnabled(false);
             return true;
         }
     }
 
     private Boolean validateUserName()
     {
-        String val = regUserName.getEditText().getText().toString();
+        String val = inputUserName.getEditText().getText().toString();
         String noWhiteSpace = "\\A\\w{4,20}\\z";
 
         if(val.isEmpty())
         {
-            regUserName.setError("Field cannot be empty");
+            inputUserName.setError("Field cannot be empty");
             return false;
         }
         else if(val.length()>=15)
         {
-            regUserName.setError("Username is too long");
+            inputUserName.setError("Username is too long");
             return false;
         }
         else if(!val.matches(noWhiteSpace))
         {
-            regUserName.setError("White Spaces are not allowed");
+            inputUserName.setError("White Spaces are not allowed");
             return false;
         }
         else
         {
-            regUserName.setError(null);
-            regUserName.setErrorEnabled(false);
+            inputUserName.setError(null);
+            inputUserName.setErrorEnabled(false);
             return true;
         }
     }
 
     private Boolean validateEmail()
     {
-        String val = regEmail.getEditText().getText().toString();
-        String emailPattern = "[a-zA-Z0._-]+@[a-z]+\\.+[a-z]+";
+        String val = inputEmail.getEditText().getText().toString();
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         if(val.isEmpty())
         {
-            regEmail.setError("Field cannot be empty");
+            inputEmail.setError("Field cannot be empty");
             return false;
         }
         else if(!val.matches(emailPattern))
         {
-            regEmail.setError("Invalid Email");
+            inputEmail.setError("Invalid Email");
             return false;
         }
         else
         {
-            regEmail.setError(null);
+            inputEmail.setError(null);
+            inputEmail.setErrorEnabled(false);
             return true;
         }
     }
 
     private Boolean validatePhone()
     {
-        String val = regPhoneNo.getEditText().getText().toString();
-        String emailPattern = "[a-zA-Z0._-]+@[a-z]+\\.+[a-z]+";
+        String val = inputPhoneNo.getEditText().getText().toString();
 
         if(val.isEmpty())
         {
-            regPhoneNo.setError("Field cannot be empty");
+            inputPhoneNo.setError("Field cannot be empty");
+            return false;
+        }
+        else if(val.length()>10)
+        {
+            inputPhoneNo.setError("Invalid Phone");
+            return false;
+        }
+        else if(val.length()< 10)
+        {
+            inputPhoneNo.setError("Invalid Phone");
             return false;
         }
         else
         {
-            regPhoneNo.setError(null);
+            inputPhoneNo.setError(null);
+            inputPhoneNo.setErrorEnabled(false);
             return true;
         }
     }
 
     private Boolean validatePassword()
     {
-        String val = regPassword.getEditText().getText().toString();
+        String val = inputPassword.getEditText().getText().toString();
         String passwordVal = "^" +
                 "(?=.*[a-zA-Z])" +
                 "(?=.*[@#$%^&+=])" +
@@ -167,22 +179,21 @@ public class Activity_Register extends AppCompatActivity {
 
         if(val.isEmpty())
         {
-            regPassword.setError("Field cannot be empty");
+            inputPassword.setError("Field cannot be empty");
             return false;
         }
         else if(!val.matches(passwordVal))
         {
-            regPassword.setError("Password is too weak");
+            inputPassword.setError("Password is too weak");
             return false;
         }
         else
         {
-            regPassword.setError(null);
+            inputPassword.setError(null);
+            inputPassword.setErrorEnabled(false);
             return true;
         }
     }
-
-
 
 
 }
