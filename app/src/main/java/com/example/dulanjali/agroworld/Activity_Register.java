@@ -1,5 +1,6 @@
 package com.example.dulanjali.agroworld;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,8 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -19,8 +24,7 @@ public class Activity_Register extends AppCompatActivity {
     TextInputLayout inputName,inputUserName,inputEmail,inputPhoneNo,inputPassword;
     MaterialButton btnRegister;
 
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,34 +32,27 @@ public class Activity_Register extends AppCompatActivity {
         setContentView(R.layout.activity__register);
 
         btnLogin = findViewById(R.id.nav_login);
-        inputName = findViewById(R.id.reg_fullname);
         inputUserName = findViewById(R.id.reg_username);
         inputEmail = findViewById(R.id.reg_email);
-        inputPhoneNo = findViewById(R.id.reg_phone);
         inputPassword = findViewById(R.id.reg_password);
         btnRegister = findViewById(R.id.reg_button);
+
+        mAuth = FirebaseAuth.getInstance();
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(!validateName() | !validateUserName() | !validateEmail() | !validatePhone() | !validatePassword() )
+                if(!validateUserName() | !validateEmail() | !validatePassword() )
                 {
                     return;
                 }
 
-                rootNode = FirebaseDatabase.getInstance();
-                reference = rootNode.getReference("users");
-
-                String name = inputName.getEditText().getText().toString();
-                String username = inputUserName.getEditText().getText().toString();
+                String name = inputUserName.getEditText().getText().toString();
                 String email = inputEmail.getEditText().getText().toString();
-                String phoneNo = inputPhoneNo.getEditText().getText().toString();
                 String password = inputPassword.getEditText().getText().toString();
 
-                UserHelperClass helperClass = new UserHelperClass(name,username,email,phoneNo,password);
-
-                reference.child(username).setValue(helperClass);
+                RegisterAccount(name,email,password);
 
             }
         });
@@ -70,22 +67,22 @@ public class Activity_Register extends AppCompatActivity {
         );
     }
 
-    private Boolean validateName()
+    private void RegisterAccount(String name, String email, String password)
     {
+        mAuth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful())
+                        {
+                            Intent regIntent = new Intent(Activity_Register.this,Activity_Login.class);
+                            regIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            finish();
+                        }
 
-        String val = inputName.getEditText().getText().toString();
+                    }
+                });
 
-        if(val.isEmpty())
-        {
-            inputName.setError("Field cannot be empty");
-            return false;
-        }
-        else
-        {
-            inputName.setError(null);
-            inputName.setErrorEnabled(false);
-            return true;
-        }
     }
 
     private Boolean validateUserName()
@@ -139,32 +136,6 @@ public class Activity_Register extends AppCompatActivity {
         }
     }
 
-    private Boolean validatePhone()
-    {
-        String val = inputPhoneNo.getEditText().getText().toString();
-
-        if(val.isEmpty())
-        {
-            inputPhoneNo.setError("Field cannot be empty");
-            return false;
-        }
-        else if(val.length()>10)
-        {
-            inputPhoneNo.setError("Invalid Phone");
-            return false;
-        }
-        else if(val.length()< 10)
-        {
-            inputPhoneNo.setError("Invalid Phone");
-            return false;
-        }
-        else
-        {
-            inputPhoneNo.setError(null);
-            inputPhoneNo.setErrorEnabled(false);
-            return true;
-        }
-    }
 
     private Boolean validatePassword()
     {

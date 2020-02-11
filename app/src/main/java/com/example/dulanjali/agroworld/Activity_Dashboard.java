@@ -78,4 +78,19 @@ public class Activity_Dashboard extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser==null)
+        {
+            Intent loginPageIntent = new Intent(Activity_Dashboard.this,Activity_Login.class);
+            loginPageIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(loginPageIntent);
+            finish();
+
+        }
+
+    }
 }

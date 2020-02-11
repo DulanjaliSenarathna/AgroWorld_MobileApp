@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,14 +37,13 @@ public class Activity_Login extends AppCompatActivity {
 
 
     private Button register, login;
-    private TextInputLayout inputUserName, inputPassword;
+    private TextInputLayout inputEmail, inputPassword;
     private CheckBox chkBoxRememberMe;
     private TextView forgot_password;
 
     private String parentDnName = "users";
 
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -51,11 +52,13 @@ public class Activity_Login extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity__login);
 
-        inputUserName = findViewById(R.id.id_username);
+        inputEmail = findViewById(R.id.id_username);
         inputPassword = findViewById(R.id.id_password);
         chkBoxRememberMe = findViewById(R.id.remember);
         register = findViewById(R.id.nav_reg);
         login = findViewById(R.id.btn_login);
+
+        mAuth = FirebaseAuth.getInstance();
 
         SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
         String checkbox = preferences.getString("remember","");
@@ -67,7 +70,7 @@ public class Activity_Login extends AppCompatActivity {
 
         else if(checkbox.equals("false"))
         {
-            Toast.makeText(this, "Please Login", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You are not Login", Toast.LENGTH_SHORT).show();
         }
 
         chkBoxRememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -99,12 +102,14 @@ public class Activity_Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                String email = inputEmail.getEditText().getText().toString();
+                String password = inputPassword.getEditText().getText().toString();
+
                 if (!validateUserName() | !validatePassword() ) {
                     return;
 
                 } else {
-
-                    isUser();
+                    loginToUserAccount(email,password);
                 }
 
             }
@@ -137,77 +142,41 @@ public class Activity_Login extends AppCompatActivity {
 
     private Boolean validateUserName()
     {
-        String val = inputUserName.getEditText().getText().toString();
+        String val = inputEmail.getEditText().getText().toString();
 
         if(val.isEmpty())
         {
-            inputUserName.setError("Field cannot be empty");
+            inputEmail.setError("Field cannot be empty");
             return false;
         }
         else
         {
-            inputUserName.setError(null);
-            inputUserName.setErrorEnabled(false);
+            inputEmail.setError(null);
+            inputEmail.setErrorEnabled(false);
             return true;
         }
     }
 
-    private void isUser() {
-        final String userEnteredUsername = inputUserName.getEditText().getText().toString().trim();
-        final String userEnteredPassword = inputPassword.getEditText().getText().toString().trim();
+    private void loginToUserAccount(String email,String password)
+    {
+        mAuth.signInWithEmailAndPassword(email,password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful())
+                        {
+                            Intent logIntent = new Intent(Activity_Login.this,Activity_Dashboard.class);
+                            startActivity(logIntent);
+                        }
 
-        reference = FirebaseDatabase.getInstance().getReference().child("users");
+                        else
+                        {
+                            Toast.makeText(Activity_Login.this, "Error! Please Enter correct credentials", Toast.LENGTH_SHORT).show();
+                        }
 
-        Query checkUser = reference.orderByChild("username").equalTo(userEnteredUsername);
-         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-             @Override
-             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                 if(dataSnapshot.exists())
-                 {
-                     inputUserName.setError(null);
-                     inputUserName.setErrorEnabled(false);
 
-                     String passwordFromDB = dataSnapshot.child(userEnteredUsername).child("password").getValue(String.class);
-
-                     if(passwordFromDB.equals(userEnteredPassword))
-                     {
-                         inputUserName.setError(null);
-                         inputUserName.setErrorEnabled(false);
-
-                         String nameFromDB = dataSnapshot.child(userEnteredUsername).child("name").getValue(String.class);
-                         String usernameFromDB = dataSnapshot.child(userEnteredUsername).child("username").getValue(String.class);
-                         String phoneNoFromDB = dataSnapshot.child(userEnteredUsername).child("phoneNo").getValue(String.class);
-                         String emailFromDB = dataSnapshot.child(userEnteredUsername).child("email").getValue(String.class);
-
-                         Intent dash = new Intent(Activity_Login.this,Activity_Profile.class);
-
-                         dash.putExtra("name",nameFromDB);
-                         dash.putExtra("username",usernameFromDB);
-                         dash.putExtra("email",emailFromDB);
-                         dash.putExtra("phoneNo",phoneNoFromDB);
-                         dash.putExtra("password",passwordFromDB);
-
-                         startActivity(dash);
-                     }
-                     else
-                     {
-                         inputPassword.setError("Wrong Password");
-                         inputPassword.requestFocus();
-                     }
-                 }
-
-                 else
-                 {
-                     inputUserName.setError("No such user exist");
-                     inputUserName.requestFocus();
-                 }
-             }
-
-             @Override
-             public void onCancelled(@NonNull DatabaseError databaseError) {
-
-             }
-         });
+                    }
+                });
 
     }
 }
