@@ -171,7 +171,9 @@ public class Activity_Login extends AppCompatActivity {
 
                         else
                         {
-                            Toast.makeText(Activity_Login.this, "Error! Please Enter correct credentials", Toast.LENGTH_SHORT).show();
+                            inputEmail.getEditText().setText("");
+                            inputPassword.getEditText().setText("");
+                            Toast.makeText(Activity_Login.this, "Please enter Correct Credentials", Toast.LENGTH_SHORT).show();
                         }
 
 

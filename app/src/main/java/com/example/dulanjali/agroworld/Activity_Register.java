@@ -25,6 +25,7 @@ public class Activity_Register extends AppCompatActivity {
     MaterialButton btnRegister;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference storeUserDefaultReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class Activity_Register extends AppCompatActivity {
                     return;
                 }
 
-                String name = inputUserName.getEditText().getText().toString();
+               final String name = inputUserName.getEditText().getText().toString();
                 String email = inputEmail.getEditText().getText().toString();
                 String password = inputPassword.getEditText().getText().toString();
 
@@ -67,7 +68,7 @@ public class Activity_Register extends AppCompatActivity {
         );
     }
 
-    private void RegisterAccount(String name, String email, String password)
+    private void RegisterAccount(final String name, String email, String password)
     {
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -75,9 +76,27 @@ public class Activity_Register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
-                            Intent regIntent = new Intent(Activity_Register.this,Activity_Login.class);
-                            regIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            finish();
+                            String current_user_id = mAuth.getCurrentUser().getUid();
+                            storeUserDefaultReference = FirebaseDatabase.getInstance().getReference().child("users").child(current_user_id);
+
+                            storeUserDefaultReference.child("user_name").setValue(name);
+                            storeUserDefaultReference.child("user_image").setValue("user");
+                            storeUserDefaultReference.child("user_thumb_image").setValue("user_image")
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful())
+                                            {
+                                                Intent regIntent = new Intent(Activity_Register.this,Activity_Login.class);
+                                                regIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(regIntent);
+                                                finish();
+                                            }
+
+                                        }
+                                    });
+
+
                         }
 
                     }
