@@ -1,6 +1,7 @@
 package com.example.dulanjali.agroworld;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,6 +26,8 @@ public class Activity_Profile extends AppCompatActivity {
     private TextInputLayout fullName,userName, phoneNo;
     private TextView fullNameLabel, userNameLabel;
 
+    private final static int Gallery_Pick = 1;
+
     private DatabaseReference getUserDataReference;
     private FirebaseAuth mAuth;
 
@@ -39,6 +42,7 @@ public class Activity_Profile extends AppCompatActivity {
         phoneNo = findViewById(R.id.prof_phone);
         fullNameLabel = findViewById(R.id.full_name);
         userNameLabel = findViewById(R.id.user_name);
+        displayProfileImage = findViewById(R.id.profile_img);
 
         mAuth = FirebaseAuth.getInstance();
         String online_user_id = mAuth.getCurrentUser().getUid();
@@ -61,7 +65,7 @@ public class Activity_Profile extends AppCompatActivity {
                 fullName.getEditText().setText(fullname);
                 userName.getEditText().setText(username);
                 phoneNo.getEditText().setText(phone);
-                
+
 
             }
 
@@ -70,9 +74,21 @@ public class Activity_Profile extends AppCompatActivity {
 
             }
         });
+
+        displayProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent();
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent,Gallery_Pick);
+            }
+        });
     }
 
-
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
