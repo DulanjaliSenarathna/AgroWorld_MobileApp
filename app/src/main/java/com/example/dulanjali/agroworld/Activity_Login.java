@@ -171,8 +171,6 @@ public class Activity_Login extends AppCompatActivity {
 
                         else
                         {
-                            inputEmail.getEditText().setText("");
-                            inputPassword.getEditText().setText("");
                             Toast.makeText(Activity_Login.this, "Please enter Correct Credentials", Toast.LENGTH_SHORT).show();
                         }
 

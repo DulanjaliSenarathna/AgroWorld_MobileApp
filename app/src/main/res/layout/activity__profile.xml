@@ -87,6 +87,7 @@
             android:layout_margin="2dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:layout_marginTop="50dp"
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
@@ -98,21 +99,22 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/prof_mail"
+            android:id="@+id/prof_usrname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-Mail"
+            android:hint="User Name"
             android:layout_marginBottom="10dp"
             android:paddingRight="10dp"
             android:layout_margin="2dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:layout_marginTop="20dp"
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
-                android:drawableLeft="@drawable/mail"
+                android:drawableLeft="@drawable/username"
                 android:drawablePadding="10dp"
-                android:text="dulanjalisenarathna93@gmail.com" />
+                android:text="dula" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,6 +127,7 @@
             android:layout_margin="2dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:layout_marginTop="20dp"
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
                 android:text="0713725452"
@@ -134,23 +137,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/prof_pw_"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:layout_marginBottom="10dp"
-            android:layout_margin="2dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="360dp"
-                android:layout_height="wrap_content"
-                android:text="dulanjali123"
-                android:drawableLeft="@drawable/password"
-                android:drawablePadding="10dp"
-                android:backgroundTint="@color/white"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_update_prof"
@@ -158,7 +145,7 @@
             android:layout_height="wrap_content"
             android:text="UPDATE"
             android:backgroundTint="#4CB7A5"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="40dp"/>
 
     </LinearLayout>
 

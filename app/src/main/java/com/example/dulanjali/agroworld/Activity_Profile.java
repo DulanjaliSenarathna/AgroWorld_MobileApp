@@ -2,6 +2,7 @@ package com.example.dulanjali.agroworld;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,9 +21,13 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Activity_Profile extends AppCompatActivity {
 
-    TextInputLayout fullName, email, phoneNo, password;
-    TextView fullNameLabel, userNameLabel;
-    DatabaseReference databaseRef;
+    private CircleImageView displayProfileImage;
+    private TextInputLayout fullName,userName, phoneNo;
+    private TextView fullNameLabel, userNameLabel;
+
+    private DatabaseReference getUserDataReference;
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,39 +35,44 @@ public class Activity_Profile extends AppCompatActivity {
         setContentView(R.layout.activity__profile);
 
         fullName = findViewById(R.id.prof_name);
-        email = findViewById(R.id.prof_mail);
+        userName = findViewById(R.id.prof_usrname);
         phoneNo = findViewById(R.id.prof_phone);
-        password = findViewById(R.id.prof_pw_);
         fullNameLabel = findViewById(R.id.full_name);
         userNameLabel = findViewById(R.id.user_name);
 
-       databaseRef = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        String online_user_id = mAuth.getCurrentUser().getUid();
+        getUserDataReference = FirebaseDatabase.getInstance().getReference().child("users").child(online_user_id);
 
-       databaseRef.addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               String nameFromDB = dataSnapshot.child("name").getValue(String.class);
-               String userNameFromDB = dataSnapshot.child("username").getValue(String.class);
-               String emailFromDB = dataSnapshot.child("email").getValue(String.class);
-               String phoneNoFromDB = dataSnapshot.child("phoneNo").getValue(String.class);
-               String passwordFromDB = dataSnapshot.child("password").getValue(String.class);
+        getUserDataReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-               fullNameLabel.setText(nameFromDB);
-               userNameLabel.setText(userNameFromDB);
-               fullName.getEditText().setText(nameFromDB);
-               email.getEditText().setText(emailFromDB);
-               phoneNo.getEditText().setText(phoneNoFromDB);
-               password.getEditText().setText(passwordFromDB);
+                String topname = dataSnapshot.child("user_fullname").getValue().toString();
+                String topusername = dataSnapshot.child("user_name").getValue().toString();
+                String fullname = dataSnapshot.child("user_fullname").getValue().toString();
+                String username = dataSnapshot.child("user_name").getValue().toString();
+                String phone = dataSnapshot.child("user_phone").getValue().toString();
+                String image = dataSnapshot.child("user_image").getValue().toString();
+                String thumb_image = dataSnapshot.child("user_thumb_image").getValue().toString();
 
-           }
+                fullNameLabel.setText(topname);
+                userNameLabel.setText(topusername);
+                fullName.getEditText().setText(fullname);
+                userName.getEditText().setText(username);
+                phoneNo.getEditText().setText(phone);
+                
 
-           @Override
-           public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
 
-           }
-       });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
     }
+
+
 
 
 }

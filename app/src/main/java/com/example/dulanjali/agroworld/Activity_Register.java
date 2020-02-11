@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Activity_Register extends AppCompatActivity {
 
     Button btnLogin;
-    TextInputLayout inputName,inputUserName,inputEmail,inputPhoneNo,inputPassword;
+    TextInputLayout inputUserName,inputFullName,inputEmail,inputPhoneNo,inputPassword;
     MaterialButton btnRegister;
 
     private FirebaseAuth mAuth;
@@ -34,7 +35,9 @@ public class Activity_Register extends AppCompatActivity {
 
         btnLogin = findViewById(R.id.nav_login);
         inputUserName = findViewById(R.id.reg_username);
+        inputFullName = findViewById(R.id.reg_fullname);
         inputEmail = findViewById(R.id.reg_email);
+        inputPhoneNo = findViewById(R.id.reg_phone);
         inputPassword = findViewById(R.id.reg_password);
         btnRegister = findViewById(R.id.reg_button);
 
@@ -44,7 +47,7 @@ public class Activity_Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(!validateUserName() | !validateEmail() | !validatePassword() )
+                if(!validateUserName() | !validateEmail() | !validatePassword() | !validateFullName() | !validatePhone() )
                 {
                     return;
                 }
@@ -52,8 +55,10 @@ public class Activity_Register extends AppCompatActivity {
                final String name = inputUserName.getEditText().getText().toString();
                 String email = inputEmail.getEditText().getText().toString();
                 String password = inputPassword.getEditText().getText().toString();
+                String fullname = inputFullName.getEditText().getText().toString();
+                String phone = inputPhoneNo.getEditText().getText().toString();
 
-                RegisterAccount(name,email,password);
+                RegisterAccount(name,fullname,email,password,phone);
 
             }
         });
@@ -68,7 +73,7 @@ public class Activity_Register extends AppCompatActivity {
         );
     }
 
-    private void RegisterAccount(final String name, String email, String password)
+    private void RegisterAccount(final String name, final String fullname, String email, String password, final String phone )
     {
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -80,6 +85,8 @@ public class Activity_Register extends AppCompatActivity {
                             storeUserDefaultReference = FirebaseDatabase.getInstance().getReference().child("users").child(current_user_id);
 
                             storeUserDefaultReference.child("user_name").setValue(name);
+                            storeUserDefaultReference.child("user_fullname").setValue(fullname);
+                            storeUserDefaultReference.child("user_phone").setValue(phone);
                             storeUserDefaultReference.child("user_image").setValue("user");
                             storeUserDefaultReference.child("user_thumb_image").setValue("user_image")
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -90,6 +97,7 @@ public class Activity_Register extends AppCompatActivity {
                                                 Intent regIntent = new Intent(Activity_Register.this,Activity_Login.class);
                                                 regIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 startActivity(regIntent);
+                                                Toast.makeText(Activity_Register.this, "Register Successfully", Toast.LENGTH_SHORT).show();
                                                 finish();
                                             }
 
@@ -132,6 +140,56 @@ public class Activity_Register extends AppCompatActivity {
         }
     }
 
+    private Boolean validateFullName()
+    {
+        String val = inputFullName.getEditText().getText().toString();
+
+        if(val.isEmpty())
+        {
+            inputFullName.setError("Field cannot be empty");
+            return false;
+        }
+        else if(val.length()>=50)
+        {
+            inputFullName.setError("Username is too long");
+            return false;
+        }
+        else
+        {
+            inputFullName.setError(null);
+            inputFullName.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private Boolean validatePhone()
+    {
+        String val = inputPhoneNo.getEditText().getText().toString();
+        String noWhiteSpace = "\\A\\w{4,20}\\z";
+
+        if(val.isEmpty())
+        {
+            inputPhoneNo.setError("Field cannot be empty");
+            return false;
+        }
+        else if(val.length()> 10| val.length()<10)
+        {
+            inputPhoneNo.setError("Invalid Phone");
+            return false;
+        }
+        else if(!val.matches(noWhiteSpace))
+        {
+            inputPhoneNo.setError("White Spaces are not allowed");
+            return false;
+        }
+        else
+        {
+            inputPhoneNo.setError(null);
+            inputPhoneNo.setErrorEnabled(false);
+            return true;
+        }
+    }
+
     private Boolean validateEmail()
     {
         String val = inputEmail.getEditText().getText().toString();
@@ -154,7 +212,6 @@ public class Activity_Register extends AppCompatActivity {
             return true;
         }
     }
-
 
     private Boolean validatePassword()
     {
