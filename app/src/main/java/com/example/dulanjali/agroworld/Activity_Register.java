@@ -87,8 +87,7 @@ public class Activity_Register extends AppCompatActivity {
                             storeUserDefaultReference.child("user_name").setValue(name);
                             storeUserDefaultReference.child("user_fullname").setValue(fullname);
                             storeUserDefaultReference.child("user_phone").setValue(phone);
-                            storeUserDefaultReference.child("user_image").setValue("user");
-                            storeUserDefaultReference.child("user_thumb_image").setValue("user_image")
+                            storeUserDefaultReference.child("user_image").setValue("user")
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

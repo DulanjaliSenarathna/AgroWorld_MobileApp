@@ -32,14 +32,12 @@
             android:id="@+id/profile_img"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/user"
             android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/full_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DULANJALI SENARATHNA"
             android:textSize="20sp"
             android:fontFamily="@font/bungee"
             android:layout_toRightOf="@id/profile_img"
@@ -52,7 +50,6 @@
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="dulanjali dilshani"
             android:textSize="14sp"
             android:layout_toRightOf="@id/profile_img"
             android:layout_centerVertical="true"
@@ -92,8 +89,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
                 android:drawableLeft="@drawable/newu"
-                android:drawablePadding="10dp"
-                android:text="Dulanjali Senarathna" />
+                android:drawablePadding="10dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,8 +109,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
                 android:drawableLeft="@drawable/username"
-                android:drawablePadding="10dp"
-                android:text="dula" />
+                android:drawablePadding="10dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -130,7 +125,6 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
-                android:text="0713725452"
                 android:drawableLeft="@drawable/call"
                 android:drawablePadding="10dp"
                 android:backgroundTint="@color/white"/>
