@@ -129,6 +129,7 @@ public class Activity_Login extends AppCompatActivity {
 
         if(val.isEmpty())
         {
+
             inputPassword.setError("Field cannot be empty");
             return false;
         }
