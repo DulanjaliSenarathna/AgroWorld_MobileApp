@@ -57,6 +57,7 @@ public class Activity_Login extends AppCompatActivity {
         chkBoxRememberMe = findViewById(R.id.remember);
         register = findViewById(R.id.nav_reg);
         login = findViewById(R.id.btn_login);
+        forgot_password = findViewById(R.id.forgot_pw);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -119,6 +120,14 @@ public class Activity_Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Activity_Login.this,Activity_Register.class));
+            }
+        });
+
+        forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity_Login.this,Activity_ResetPassword.class));
+
             }
         });
     }

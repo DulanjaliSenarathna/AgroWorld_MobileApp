@@ -21,8 +21,6 @@
             app:cardBackgroundColor="#4CB7A5"
             android:elevation="6dp">
 
-
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

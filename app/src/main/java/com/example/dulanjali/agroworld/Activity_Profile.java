@@ -39,6 +39,7 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageActivity;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
@@ -259,10 +260,6 @@ public class Activity_Profile extends AppCompatActivity {
         {
             imageUri = data.getData();
 
-            CropImage.activity(imageUri)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .start(this);
-
             if(uploadTask != null && uploadTask.isInProgress())
             {
                 Toast.makeText(getApplicationContext(), "Upload in progress", Toast.LENGTH_SHORT).show();
@@ -273,5 +270,7 @@ public class Activity_Profile extends AppCompatActivity {
             }
         }
 
+
     }
+
 }
