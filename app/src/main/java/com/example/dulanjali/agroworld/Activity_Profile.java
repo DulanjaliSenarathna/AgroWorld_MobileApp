@@ -129,9 +129,9 @@ public class Activity_Profile extends AppCompatActivity {
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String fullname = fullName.getEditText().getText().toString();
+                String fulname = fullName.getEditText().getText().toString();
 
-                    getUserDataReference.child("user_fullname").setValue(fullname)
+                    getUserDataReference.child("user_fullname").setValue(fulname)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -179,6 +179,7 @@ public class Activity_Profile extends AppCompatActivity {
                             }
                         });
             }
+
         });
 
     }
@@ -257,6 +258,10 @@ public class Activity_Profile extends AppCompatActivity {
         if(requestCode==Gallery_Pick && resultCode==RESULT_OK && data!=null && data.getData() != null)
         {
             imageUri = data.getData();
+
+            CropImage.activity(imageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(this);
 
             if(uploadTask != null && uploadTask.isInProgress())
             {
