@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,6 +18,13 @@
             app:mt_speechMode="false"
             app:mt_hint="SEARCH POST"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/postList"
+            android:layout_below="@id/searchBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_marginTop="528dp"
             android:layout_marginLeft="285dp"
@@ -29,4 +36,4 @@
 
     </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

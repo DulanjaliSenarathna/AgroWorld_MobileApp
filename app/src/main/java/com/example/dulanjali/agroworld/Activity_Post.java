@@ -28,8 +28,12 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -64,6 +68,10 @@ public class Activity_Post extends AppCompatActivity {
     private StorageTask blogStorageTask;
     private DatabaseReference productDataRef;
     private FirebaseUser fuser;
+    private DatabaseReference userDbRef;
+
+    //user info
+    String name,email,uid,dp;
 
 
     @Override
@@ -77,11 +85,34 @@ public class Activity_Post extends AppCompatActivity {
         newPostDesc=findViewById(R.id.post_desc);
         loadingBar = new ProgressDialog(this);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        checkUserStatus();
+
+        //get some info of current user to include in post
+        userDbRef=FirebaseDatabase.getInstance().getReference("users");
+        Query query = userDbRef.orderByChild("email").equalTo(email);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot ds: dataSnapshot.getChildren())
+                {
+                    name = ""+ds.child("user_name").getValue();
+                    dp = ""+ds.child("imageURL").getValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         storePostImagestorageRef = FirebaseStorage.getInstance().getReference().child("blog_images");
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-        final String online_user_id = firebaseAuth.getCurrentUser().getUid();
         productDataRef = FirebaseDatabase.getInstance().getReference().child("Posts");
 
         mPostImage.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +134,22 @@ public class Activity_Post extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void checkUserStatus()
+    {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if(user != null)
+        {
+            email = user.getEmail();
+            uid = user.getUid();
+        }
+        else
+        {
+            startActivity(new Intent(this,Activity_Login.class));
+            finish();
+
+        }
     }
 
     private void ValidatePostData()
@@ -200,6 +247,10 @@ public class Activity_Post extends AppCompatActivity {
     private void SavePostInfoToDatabase()
     {
         HashMap<String,Object> postMap = new HashMap<>();
+        postMap.put("uid",uid);
+        postMap.put("user_name",name);
+        postMap.put("email",email);
+        postMap.put("uDp",dp);
         postMap.put("pid",postRandomKey);
         postMap.put("date",saveCurrentDate);
         postMap.put("time",getSaveCurrentTime);

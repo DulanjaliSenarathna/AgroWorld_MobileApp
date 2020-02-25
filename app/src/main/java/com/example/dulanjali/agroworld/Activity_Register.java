@@ -73,7 +73,7 @@ public class Activity_Register extends AppCompatActivity {
         );
     }
 
-    private void RegisterAccount(final String name, final String fullname, String email, String password, final String phone )
+    private void RegisterAccount(final String name, final String fullname, final String email, String password, final String phone )
     {
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -83,7 +83,7 @@ public class Activity_Register extends AppCompatActivity {
                         {
                             String current_user_id = mAuth.getCurrentUser().getUid();
                             storeUserDefaultReference = FirebaseDatabase.getInstance().getReference().child("users").child(current_user_id);
-
+                            storeUserDefaultReference.child("email").setValue(email);
                             storeUserDefaultReference.child("user_name").setValue(name);
                             storeUserDefaultReference.child("user_fullname").setValue(fullname);
                             storeUserDefaultReference.child("user_phone").setValue(phone);
