@@ -90,9 +90,9 @@ public class Activity_Profile extends AppCompatActivity {
                 User user = dataSnapshot.getValue(User.class);
 
                 String topname = dataSnapshot.child("user_fullname").getValue().toString();
-                String topusername = dataSnapshot.child("user_name").getValue().toString();
+                String topusername = dataSnapshot.child("username").getValue().toString();
                 String fullname = dataSnapshot.child("user_fullname").getValue().toString();
-                String username = dataSnapshot.child("user_name").getValue().toString();
+                String username = dataSnapshot.child("username").getValue().toString();
                 String phone = dataSnapshot.child("user_phone").getValue().toString();
 
                 fullNameLabel.setText(topname);

@@ -30,16 +30,7 @@
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"/>
 
-            <Button
-                android:id="@+id/log_out"
-                android:backgroundTint="@color/white"
-                android:layout_marginTop="2dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LOGOUT"
-                android:textSize="12sp"
-                android:textColor="@color/colorPrimary"
-                android:layout_marginLeft="255dp"/>
+
 
 
 
@@ -293,11 +284,13 @@
                 android:padding="16dp">
 
                 <ImageView
+                    android:id="@+id/chatBtn"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:src="@drawable/chat" />
 
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"

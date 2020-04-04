@@ -2,12 +2,12 @@ package com.example.dulanjali.agroworld.Model;
 
 public class Post
 {
-    String title,description,image,time,uid,email,uDp,user_name,pid;
+    String title,description,image,time,uid,email,uDp,username,pid;
 
     public Post() {
     }
 
-    public Post(String title, String description, String image, String time, String uid, String email, String uDp, String user_name, String pid) {
+    public Post(String title, String description, String image, String time, String uid, String email, String uDp, String username, String pid) {
         this.title = title;
         this.description = description;
         this.image = image;
@@ -15,7 +15,7 @@ public class Post
         this.uid = uid;
         this.email = email;
         this.uDp = uDp;
-        this.user_name = user_name;
+        this.username = username;
         this.pid = pid;
     }
 
@@ -75,19 +75,19 @@ public class Post
         this.uDp = uDp;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getpId() {
+    public String getPid() {
         return pid;
     }
 
-    public void setpId(String pid) {
+    public void setPid(String pid) {
         this.pid = pid;
     }
 }

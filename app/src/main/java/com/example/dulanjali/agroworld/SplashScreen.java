@@ -1,6 +1,7 @@
 package com.example.dulanjali.agroworld;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashScreen extends AppCompatActivity {
 
+    SharedPreferences onBoardingScreen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +23,25 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreen.this,Activity_Login.class));
+                onBoardingScreen = getSharedPreferences("onBoardingScreen",MODE_PRIVATE);
+                boolean isFirstTime = onBoardingScreen.getBoolean("firstTime",true);
+
+                if(isFirstTime)
+                {
+                    SharedPreferences.Editor editor = onBoardingScreen.edit();
+                    editor.putBoolean("firstTime",false);
+                    editor.commit();
+                    Intent intent = new Intent(getApplicationContext(),OnBoarding.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else
+                {
+                    Intent intent = new Intent(getApplicationContext(),Activity_Login.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         },5000);
 

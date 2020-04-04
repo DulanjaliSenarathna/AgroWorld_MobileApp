@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class Activity_Dashboard extends AppCompatActivity {
 
     private Button logout;
-    private ImageView updateProfile,blog;
+    private ImageView updateProfile,blog,chat;
 
     private FirebaseAuth mAuth;
 
@@ -26,26 +26,12 @@ public class Activity_Dashboard extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        logout = findViewById(R.id.log_out);
+
         updateProfile = findViewById(R.id.update_profile);
+        chat = findViewById(R.id.chatBtn);
         blog=findViewById(R.id.blog);
 
-        logout.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        logOut();
-                        startActivity(new Intent(Activity_Dashboard.this,Activity_Login.class));
 
-                        SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("remember","false");
-                        editor.apply();
-
-                        finish();
-                    }
-                }
-        );
 
         updateProfile.setOnClickListener(
                 new View.OnClickListener() {
@@ -64,6 +50,15 @@ public class Activity_Dashboard extends AppCompatActivity {
                     }
                 }
         );
+
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  startActivity(new Intent(Activity_Dashboard.this,Activity_Group_Chat.class));
+
+            }
+        });
+
     }
 
     private void logOut()

@@ -1,16 +1,17 @@
 package com.example.dulanjali.agroworld.ViewHolder;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
 import com.example.dulanjali.agroworld.Interface.ItemClickListner;
 import com.example.dulanjali.agroworld.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -18,6 +19,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public TextView textUserName, textTime,textTitle, textDescription;
     public ImageView imageView;
     public ItemClickListner listner;
+    public ImageButton moreButton;
+    public View mView;
 
     public PostViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -28,7 +31,10 @@ public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         textTime = (TextView)itemView.findViewById(R.id.time);
         textTitle = (TextView)itemView.findViewById(R.id.pTitle);
         textDescription= (TextView)itemView.findViewById(R.id.pDescription);
+
+
     }
+
 
     public void setItemClickListner(ItemClickListner listner)
     {

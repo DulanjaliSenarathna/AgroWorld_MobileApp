@@ -56,8 +56,9 @@ public class Activity_Post extends AppCompatActivity {
     private MaterialButton addPostBtn;
     private static final int GALLERY_REQUEST = 123;
     private EditText newPostTitle, newPostDesc;
-    private String postRandomKey,downloadImageUrl;
+    private String downloadImageUrl;
     private ProgressDialog loadingBar;
+    public String postRandomKey;
 
 
     private Uri imageData;
@@ -65,7 +66,6 @@ public class Activity_Post extends AppCompatActivity {
     private StorageReference storePostImagestorageRef;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
-    private StorageTask blogStorageTask;
     private DatabaseReference productDataRef;
     private FirebaseUser fuser;
     private DatabaseReference userDbRef;
@@ -97,7 +97,7 @@ public class Activity_Post extends AppCompatActivity {
 
                 for (DataSnapshot ds: dataSnapshot.getChildren())
                 {
-                    name = ""+ds.child("user_name").getValue();
+                    name = ""+ds.child("username").getValue();
                     dp = ""+ds.child("imageURL").getValue();
                 }
             }
@@ -248,7 +248,7 @@ public class Activity_Post extends AppCompatActivity {
     {
         HashMap<String,Object> postMap = new HashMap<>();
         postMap.put("uid",uid);
-        postMap.put("user_name",name);
+        postMap.put("username",name);
         postMap.put("email",email);
         postMap.put("uDp",dp);
         postMap.put("pid",postRandomKey);

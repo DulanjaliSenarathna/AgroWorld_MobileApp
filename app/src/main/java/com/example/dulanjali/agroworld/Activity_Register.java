@@ -83,11 +83,11 @@ public class Activity_Register extends AppCompatActivity {
                         {
                             String current_user_id = mAuth.getCurrentUser().getUid();
                             storeUserDefaultReference = FirebaseDatabase.getInstance().getReference().child("users").child(current_user_id);
+                            storeUserDefaultReference.child("uid").setValue(current_user_id);
                             storeUserDefaultReference.child("email").setValue(email);
-                            storeUserDefaultReference.child("user_name").setValue(name);
+                            storeUserDefaultReference.child("username").setValue(name);
                             storeUserDefaultReference.child("user_fullname").setValue(fullname);
-                            storeUserDefaultReference.child("user_phone").setValue(phone);
-                            storeUserDefaultReference.child("user_image").setValue("user")
+                            storeUserDefaultReference.child("user_phone").setValue(phone)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

@@ -37,7 +37,7 @@ public class Activity_Login extends AppCompatActivity {
 
 
     private Button register, login;
-     TextInputLayout inputEmail, inputPassword;
+      public TextInputLayout inputEmail, inputPassword;
     private CheckBox chkBoxRememberMe;
     private TextView forgot_password;
 
