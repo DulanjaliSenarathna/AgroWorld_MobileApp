@@ -2,10 +2,12 @@ package com.example.dulanjali.agroworld;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -25,20 +27,38 @@ import java.util.Map;
 
 public class SoilMoistureActivity extends AppCompatActivity {
 
-    Button button;
+
+    ToggleButton toggleButton;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soil_moisture);
 
-        button = findViewById(R.id.button);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        toggleButton = findViewById(R.id.toggleButton);
+
+        sharedPreferences=getSharedPreferences("ststus",MODE_PRIVATE);
+        if (sharedPreferences.getString("ststusid","999").equals("1")){
+            toggleButton.setChecked(true);
+        }else {
+            toggleButton.setChecked(false);
+        }
+
+
+
+        toggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (toggleButton.isChecked()){
+                    postRequest();
+                    toggleButton.setChecked(true);
+                }else {
+                    postRequestFalse();
+                    toggleButton.setChecked(false);
+                }
 
-                postRequest();
             }
         });
 
@@ -54,7 +74,6 @@ public class SoilMoistureActivity extends AppCompatActivity {
 
             JSONObject jsonBody = new JSONObject();
             JSONObject datum = new JSONObject();
-//            JSONObject newobj = jsonBody.getJSONObject("datum");
 
             datum.put("value","1");
 
@@ -64,7 +83,11 @@ public class SoilMoistureActivity extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     try {
 
-                        Toast.makeText(SoilMoistureActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SoilMoistureActivity.this, "Moter On", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPreferences=getSharedPreferences("ststus",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("ststusid","1");
+                        editor.commit();
 
                     }catch(Exception ex){}
                 }
@@ -86,5 +109,47 @@ public class SoilMoistureActivity extends AppCompatActivity {
         }catch(Exception e){}
 
 
+    }
+
+    private void postRequestFalse(){
+        try {
+
+            RequestQueue requestQueue= Volley.newRequestQueue(this);
+
+            JSONObject jsonBody = new JSONObject();
+            JSONObject datum = new JSONObject();
+
+            datum.put("value","0");
+
+            JsonObjectRequest jsonOblectReq = new JsonObjectRequest(new Stables().url(), datum, new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+
+                        Toast.makeText(SoilMoistureActivity.this, "Moter Off", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPreferences=getSharedPreferences("ststus",MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("ststusid","0");
+                        editor.commit();
+
+                    }catch(Exception ex){}
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("X-AIO-Key", "aio_btJp99cUWnF74pM7IoFix0oqNYiA");
+                    params.put("Content-Type", "application/json");
+                    return params;
+                }
+            };
+
+            requestQueue.add(jsonOblectReq);
+        }catch(Exception e){}
     }
 }
