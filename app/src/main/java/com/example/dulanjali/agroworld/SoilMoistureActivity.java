@@ -83,7 +83,7 @@ public class SoilMoistureActivity extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     try {
 
-                        Toast.makeText(SoilMoistureActivity.this, "Moter On", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SoilMoistureActivity.this, "Water Pump On", Toast.LENGTH_SHORT).show();
                         SharedPreferences sharedPreferences=getSharedPreferences("ststus",MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         editor.putString("ststusid","1");
@@ -127,7 +127,7 @@ public class SoilMoistureActivity extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     try {
 
-                        Toast.makeText(SoilMoistureActivity.this, "Moter Off", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SoilMoistureActivity.this, "Water Pump Off", Toast.LENGTH_SHORT).show();
                         SharedPreferences sharedPreferences=getSharedPreferences("ststus",MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         editor.putString("ststusid","0");

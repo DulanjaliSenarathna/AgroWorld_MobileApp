@@ -22,12 +22,8 @@ public class Activity_Dashboard extends AppCompatActivity {
 
     //Views
     private ImageView temperature,humidity,soil,motion,blog,profile;
-    private RequestQueue mQueue;
     ImageView check_wifi,wifi_status;
     TextView wifi_st_txt;
-
-
-
 
     private FirebaseAuth mAuth;
 
@@ -49,7 +45,7 @@ public class Activity_Dashboard extends AppCompatActivity {
         wifi_status = findViewById(R.id.connectionIv);
         wifi_st_txt = findViewById(R.id.connectionTv);
 
-        mQueue = Volley.newRequestQueue(this);
+
 
         //image click to check network status
         check_wifi.setOnClickListener(new View.OnClickListener() {
@@ -64,10 +60,36 @@ public class Activity_Dashboard extends AppCompatActivity {
         temperature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(Activity_Dashboard.this,TemperatureDataActivity.class));
 
             }
         });
 
+        humidity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity_Dashboard.this,HumidityDataActivity.class));
+
+            }
+        });
+
+        soil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                startActivity(new Intent(Activity_Dashboard.this,SoilMoistureActivity.class));
+
+            }
+        });
+
+        motion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity_Dashboard.this,MotionDetectionActivity.class));
+
+            }
+        });
 
 
         profile.setOnClickListener(
@@ -88,23 +110,9 @@ public class Activity_Dashboard extends AppCompatActivity {
                 }
         );
 
-        soil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                startActivity(new Intent(Activity_Dashboard.this,SoilMoistureActivity.class));
-                jsonParse();
-            }
-        });
-
-
     }
 
-    private void jsonParse()
-    {
-        String url = "https://io.adafruit.com/api/v2/dulanjali/feeds/soil-moisture/";
-    }
+
 
     private void checkNetworkConnectionStatus()
     {

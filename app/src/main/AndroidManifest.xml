@@ -14,7 +14,10 @@
         android:roundIcon="@drawable/plantt"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SoilMoistureActivity"></activity>
+        <activity android:name=".MotionDetectionActivity"></activity>
+        <activity android:name=".HumidityDataActivity" />
+        <activity android:name=".TemperatureDataActivity" />
+        <activity android:name=".SoilMoistureActivity" />
         <activity android:name=".Activity_Post" />
         <activity
             android:name=".Activity_ResetPassword"
