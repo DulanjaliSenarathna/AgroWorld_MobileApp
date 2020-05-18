@@ -14,7 +14,8 @@
         android:roundIcon="@drawable/plantt"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MotionDetectionActivity"></activity>
+        <activity android:name=".AllSoilMoistureDataActivity"></activity>
+        <activity android:name=".MotionDetectionActivity" />
         <activity android:name=".HumidityDataActivity" />
         <activity android:name=".TemperatureDataActivity" />
         <activity android:name=".SoilMoistureActivity" />
