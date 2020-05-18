@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/add_btn" />
 
     <EditText
-        android:id="@+id/post_title"
+        android:id="@+id/new_note_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageSelect"
@@ -45,19 +45,19 @@
         android:layout_marginTop="2dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-        android:id="@+id/post_desc"
+        android:id="@+id/new_note_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:layout_below="@id/post_title"
+        android:layout_below="@id/new_note_title"
         android:inputType="textMultiLine" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/addpost_button"
+        android:id="@+id/create_list_button"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/post_desc"
+        android:layout_below="@id/new_note_content"
         android:layout_marginTop="45dp"
         android:layout_marginRight="20dp"
         android:layout_marginStart="20dp"

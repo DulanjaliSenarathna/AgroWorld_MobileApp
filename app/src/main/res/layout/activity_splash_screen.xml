@@ -16,23 +16,24 @@
 
         <RelativeLayout
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="394dp">
 
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="114dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="126dp"
-                android:layout_marginTop="170dp"
+                android:layout_marginTop="230dp"
                 android:src="@drawable/plantt" />
 
             <TextView
+                android:id="@+id/logname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:layout_marginLeft="123dp"
-                android:layout_marginTop="280dp"
+                android:layout_below="@id/logo"
+                android:layout_marginLeft="119dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/font"
                 android:text="AGRO WORLD"
                 android:textColor="@color/colorPrimaryDark"
@@ -41,14 +42,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/logname"
+                android:layout_marginLeft="122dp"
+                android:fontFamily="@font/font"
                 android:text="Listen to your crop"
                 android:textColor="@color/colorPrimary"
-                android:textSize="15sp"
-                android:layout_marginTop="305dp"
-                android:layout_marginLeft="122dp"
-                android:fontFamily="@font/font"/>
-
-
+                android:textSize="15sp" />
 
 
         </RelativeLayout>

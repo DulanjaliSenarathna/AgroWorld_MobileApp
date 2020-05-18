@@ -20,19 +20,22 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/postList"
-            android:layout_below="@id/searchBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@id/searchBar"
+            android:layout_marginTop="0dp">
 
         </androidx.recyclerview.widget.RecyclerView>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_marginTop="528dp"
-            android:layout_marginLeft="285dp"
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/add"
+            android:layout_marginTop="620dp"
+            android:layout_marginLeft="280dp"
+            android:backgroundTint="@color/colorPrimaryDark"/>
 
     </RelativeLayout>
 

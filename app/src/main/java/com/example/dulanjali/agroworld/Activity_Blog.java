@@ -57,7 +57,9 @@ public class Activity_Blog extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__blog);
 
-        addPostbtn = findViewById(R.id.floatingActionButton);
+        addPostbtn= findViewById(R.id.fab);
+
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();

@@ -49,12 +49,6 @@
 
             </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/moreBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/ic_more_black" />
 
         </LinearLayout>
 
@@ -80,56 +74,6 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@color/white" />
-
-        <TextView
-            android:id="@+id/pLikes"
-            android:text="1.2k Likes"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#F5F0F0"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <com.google.android.material.button.MaterialButton
-                android:drawableLeft="@drawable/ic_like_black"
-                android:id="@+id/likeBtn"
-                android:backgroundTint="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="LIKE"
-                android:textColor="@color/colorPrimaryDark"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:drawableLeft="@drawable/ic_comment_black"
-                android:id="@+id/commentBtn"
-                android:backgroundTint="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="COMMENT"
-                android:textColor="@color/colorPrimaryDark"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:drawableLeft="@drawable/ic_share_black"
-                android:id="@+id/shareBtn"
-                android:backgroundTint="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="SHARE"
-                android:textColor="@color/colorPrimaryDark"/>
-
-        </LinearLayout>
 
     </LinearLayout>
 

@@ -4,349 +4,411 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity_Dashboard"
-    android:background="#fff">
+    tools:context=".Activity_Dashboard">
 
-<LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        >
 
-    android:layout_marginTop="15dp"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:padding="8dp"
-            android:layout_marginRight="10dp"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="#00045304"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            tools:layout_editor_absoluteX="-16dp"
+            tools:layout_editor_absoluteY="0dp" />
 
         <TextView
-            android:layout_marginTop="12dp"
-            android:layout_marginLeft="15dp"
+        android:id="@+id/textLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/baloo"
+        android:padding="0dp"
+        android:text="Agro World"
+        android:textSize="30sp"
+
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/textSlogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Listen to your crops"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.143" />
+
+    <ImageView
+        android:id="@+id/imageWifi"
+        android:layout_width="70dp"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.943"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/multimedia" />
+
+
+        <ImageView
+            android:paddingRight="5dp"
+            android:layout_marginTop="8dp"
+            android:id="@+id/connectionIv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/Linera1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/toolbar"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:paddingLeft="5dp"
+            android:id="@+id/connectionTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MY DASHBOARD"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"/>
+            android:layout_marginLeft="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.131"
+            app:layout_constraintLeft_toRightOf="@+id/connectionIv"
+            app:layout_constraintStart_toStartOf="@+id/connectionIv"
+            app:layout_constraintTop_toTopOf="@+id/toolbar"
+            app:layout_constraintVertical_bias="0.014" />
 
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="175dp"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageWifi">
 
-
-
-
-</RelativeLayout>
-
-    <GridLayout
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="15dp"
-        android:columnCount="2"
-        android:rowCount="3"
-        android:alignmentMode="alignMargins"
-        android:columnOrderPreserved="false"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            app:cardMaxElevation="6dp"
-            app:cardCornerRadius="6dp"
-            android:layout_margin="12dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardElevation="2dp"
+                app:cardMaxElevation="2dp">
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/celsius" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="TEMPERATURE"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/textTemperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imageTemperature"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/allerta"
+                        android:text="Temperature"
+                        android:textSize="18sp" />
 
+                    <ImageView
+                        android:id="@+id/imageTemperature"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/celsius" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            app:cardMaxElevation="6dp"
-            app:cardCornerRadius="6dp"
-            android:layout_margin="12dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardElevation="2dp">
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/humidity" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="HUMIDITY"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/textHumidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imageHumidity"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/allerta"
+                        android:text="Humidity"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/imageHumidity"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/humidity" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
 
-            </LinearLayout>
+        </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="0dp"
+            android:layout_height="175dp"
+            android:layout_marginTop="216dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageWifi">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            app:cardMaxElevation="6dp"
-            app:cardCornerRadius="12dp"
-            android:layout_margin="12dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardElevation="2dp"
+                app:cardMaxElevation="2dp">
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="63dp"
-                    android:src="@drawable/seeds"
-                    android:layout_marginTop="20dp"
-                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="SOIL MOISTURE"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/textSoil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imageSoil"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/allerta"
+                        android:text="Soil Moisture"
+                        android:textSize="18sp" />
 
+                    <ImageView
+                        android:id="@+id/imageSoil"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/drop" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            app:cardMaxElevation="6dp"
-            app:cardCornerRadius="12dp"
-            android:layout_margin="12dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardElevation="2dp">
 
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/irrigation"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="IRRIGATION"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/textMotion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imageMotion"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/allerta"
+                        android:text="Motion"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/imageMotion"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/motion" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
 
-            </LinearLayout>
+        </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:id="@+id/Linera1"
+            android:layout_width="0dp"
+            android:layout_height="175dp"
+            android:layout_marginTop="376dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageWifi">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            app:cardMaxElevation="6dp"
-            app:cardCornerRadius="12dp"
-            android:layout_margin="12dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardElevation="2dp"
+                app:cardMaxElevation="2dp">
 
-                <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:src="@drawable/motionsensor" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="MOTION DETECTION"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/textBlog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imageBlog"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/allerta"
+                        android:text="Blog"
+                        android:textSize="18sp" />
 
+                    <ImageView
+                        android:id="@+id/imageBlog"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/blog" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            app:cardMaxElevation="6dp"
-            app:cardCornerRadius="12dp"
-            android:layout_margin="12dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardElevation="2dp">
 
-                <ImageView
-                    android:id="@+id/blog"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/blog" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="BLOG"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
+                    <TextView
+                        android:id="@+id/textProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imageProfile"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/allerta"
+                        android:text="Profile"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/imageProfile"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/social" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
 
-            </LinearLayout>
+        </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="175dp"
+            android:layout_marginTop="376dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageWifi">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            app:cardMaxElevation="6dp"
-            app:cardCornerRadius="12dp"
-            android:layout_margin="12dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardElevation="2dp"
+                app:cardMaxElevation="2dp">
 
-                <ImageView
-                    android:id="@+id/chatBtn"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/chat" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
+                    <TextView
+                        android:id="@+id/textNote"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imageNote"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/allerta"
+                        android:text="Blog"
+                        android:textSize="18sp" />
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="CHAT"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="15sp" />
+                    <ImageView
+                        android:id="@+id/imageNote"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/blog" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            app:cardMaxElevation="6dp"
-            app:cardCornerRadius="12dp"
-            android:layout_margin="12dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardElevation="2dp">
 
-                <ImageView
-                    android:id="@+id/update_profile"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/edittool" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="UPDATE PROFILE"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="18sp" />
+                    <TextView
+                        android:id="@+id/textShop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/imageShop"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/allerta"
+                        android:text="Profile"
+                        android:textSize="18sp" />
 
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-
-
-
-    </GridLayout>
-
-</LinearLayout>
-    
+                    <ImageView
+                        android:id="@+id/imageShop"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        app:srcCompat="@drawable/social" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
 
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

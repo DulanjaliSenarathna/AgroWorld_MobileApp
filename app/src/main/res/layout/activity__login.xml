@@ -4,42 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity_Register"
-    android:orientation="vertical"
     android:background="#fff"
+    android:orientation="vertical"
     android:padding="20dp"
-    >
+    tools:context=".Activity_Register">
 
 
     <ImageView
+        android:id="@+id/Logo_img"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:id="@+id/Logo_img"
-        android:src="@drawable/plantt"
         android:layout_marginLeft="119dp"
-        android:transitionName="logo"
-        />
+        android:src="@drawable/plantt"
+        android:transitionName="logo" />
+
     <TextView
-        android:transitionName="words"
-        android:layout_marginLeft="115dp"
-        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/font"
         android:text="AGRO WORLD"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:transitionName="words" />
 
     <TextView
-        android:transitionName="theme"
-        android:layout_marginLeft="110dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="101dp"
+        android:fontFamily="@font/font"
         android:text="Listen to your crop"
         android:textColor="@color/colorPrimary"
         android:textSize="13sp"
-        android:fontFamily="@font/font"/>
-
+        android:transitionName="theme" />
 
 
     <LinearLayout
@@ -51,32 +49,31 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/id_username"
-            android:layout_width="match_parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="E Mail">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:inputType="text"
                 android:layout_height="wrap_content"
-                />
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/id_password"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
-            android:hint="Password">
+            android:layout_marginTop="10dp"
+            android:hint="Password"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,43 +86,41 @@
                 android:id="@+id/remember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="REMEMBER ME"
                 android:layout_marginTop="20dp"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:text="REMEMBER ME"
+                android:textColor="@color/colorPrimaryDark" />
 
             <TextView
                 android:id="@+id/forgot_pw"
                 android:layout_width="184dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="90dp"
+                android:layout_marginLeft="55dp"
                 android:layout_marginTop="20dp"
                 android:text="FORGOT PASSWORD "
-                android:textColor="@color/colorPrimaryDark"
-                 />
+                android:textColor="@color/colorPrimaryDark" />
 
 
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:layout_marginTop="20dp"
             android:id="@+id/btn_login"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:background="@color/colorPrimaryDark"
-            android:text="LOGIN"
             android:minWidth="200dp"
-            app:cornerRadius="8dp"
-            />
+            android:text="LOGIN"
+            app:cornerRadius="8dp" />
 
         <Button
-            android:layout_marginTop="20dp"
             android:id="@+id/nav_reg"
-            android:textColor="@color/colorPrimaryDark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:backgroundTint="@color/white"
-            android:text="NEW USER? REGISTER HERE "/>
+            android:layout_marginTop="20dp"
+            android:text="NEW USER? REGISTER HERE "
+            android:textColor="@color/colorPrimaryDark"
+            app:backgroundTint="@color/white" />
 
 
     </LinearLayout>
