@@ -1,5 +1,6 @@
 package com.example.dulanjali.agroworld;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -15,16 +16,24 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.example.dulanjali.agroworld.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Activity_Dashboard extends AppCompatActivity {
 
     //Views
     private ImageView temperature,humidity,soil,motion,blog,profile;
     ImageView check_wifi,wifi_status;
-    TextView wifi_st_txt;
-
+    TextView wifi_st_txt,username;
+    private DatabaseReference getUserDataReference;
+    private FirebaseUser fuser;
     private FirebaseAuth mAuth;
 
     @Override
@@ -40,11 +49,18 @@ public class Activity_Dashboard extends AppCompatActivity {
         soil=findViewById(R.id.imageSoil);
         motion = findViewById(R.id.imageMotion);
         blog = findViewById(R.id.imageBlog);
-        profile = findViewById(R.id.imageProfile);
+        profile = findViewById(R.id.prof_icon);
         check_wifi = findViewById(R.id.imageWifi);
         wifi_status = findViewById(R.id.connectionIv);
         wifi_st_txt = findViewById(R.id.connectionTv);
 
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Activity_Dashboard.this,Activity_Profile.class));
+
+            }
+        });
 
 
         //image click to check network status
@@ -91,15 +107,6 @@ public class Activity_Dashboard extends AppCompatActivity {
             }
         });
 
-
-        profile.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(Activity_Dashboard.this,Activity_Profile.class));
-                    }
-                }
-        );
 
         blog.setOnClickListener(
                 new View.OnClickListener() {

@@ -51,7 +51,7 @@ public class Activity_Profile extends AppCompatActivity {
     private CircleImageView displayProfileImage;
     private TextInputLayout fullName,userName, phoneNo;
     private TextView fullNameLabel, userNameLabel;
-    private Button btnUpdateProfile;
+    private Button btnUpdateProfile,logout;
 
     private final static int Gallery_Pick = 1;
     private StorageReference storeProfileImagestorageRef;
@@ -76,6 +76,7 @@ public class Activity_Profile extends AppCompatActivity {
         userNameLabel = findViewById(R.id.user_name);
         displayProfileImage = findViewById(R.id.profile_img);
         btnUpdateProfile = findViewById(R.id.btn_update_prof);
+        logout = findViewById(R.id.btn_logout);
 
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         mAuth = FirebaseAuth.getInstance();
@@ -127,6 +128,14 @@ public class Activity_Profile extends AppCompatActivity {
             }
         });
 
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                finish();
+            }
+        });
+
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +155,7 @@ public class Activity_Profile extends AppCompatActivity {
                                 }
                             });
                 String username = userName.getEditText().getText().toString();
-                getUserDataReference.child("user_name").setValue(username)
+                getUserDataReference.child("username").setValue(username)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
