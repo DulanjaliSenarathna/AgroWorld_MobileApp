@@ -38,6 +38,8 @@ public class SoilMoistureActivity extends AppCompatActivity {
     PopupMenu popupmenu ;
     ImageView allData;
     TextView lastData;
+    private TextView mTextViewResult;
+    private RequestQueue mQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,10 @@ public class SoilMoistureActivity extends AppCompatActivity {
                 PopMenuDisplay();
             }
         });
+        mTextViewResult = findViewById(R.id.last_data);
+        mQueue = Volley.newRequestQueue(this);
+
+        jsonParse();
 
         sharedPreferences=getSharedPreferences("ststus",MODE_PRIVATE);
         if (sharedPreferences.getString("ststusid","999").equals("1")){
@@ -76,6 +82,47 @@ public class SoilMoistureActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void jsonParse()
+    {
+
+
+        RequestQueue requestQueue= Volley.newRequestQueue(SoilMoistureActivity.this);
+        StringRequest stringRequest=new StringRequest(Request.Method.GET, new Stables().getSoilDetails(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //hide loading
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+
+
+                    lastData.setText(jsonObject.getString("value"));
+
+
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //hide loading
+                Toast.makeText(SoilMoistureActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-AIO-Key", "aio_btJp99cUWnF74pM7IoFix0oqNYiA");
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
 
     }
 
