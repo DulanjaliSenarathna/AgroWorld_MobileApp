@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MotionDetectionActivity extends AppCompatActivity {
+public class Activity_TemperatureData extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_motion_detection);
+        setContentView(R.layout.activity_temperature_data);
     }
 }

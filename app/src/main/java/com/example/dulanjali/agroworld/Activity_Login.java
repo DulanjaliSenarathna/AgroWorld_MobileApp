@@ -35,9 +35,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Activity_Login extends AppCompatActivity {
 
-
+    // views
     private Button register, login;
-      public TextInputLayout inputEmail, inputPassword;
+    public TextInputLayout inputEmail, inputPassword;
     private CheckBox chkBoxRememberMe;
     private TextView forgot_password;
 
@@ -45,13 +45,13 @@ public class Activity_Login extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity__login);
 
+        //link views with xml
         inputEmail = findViewById(R.id.id_username);
         inputPassword = findViewById(R.id.id_password);
         chkBoxRememberMe = findViewById(R.id.remember);
@@ -59,8 +59,10 @@ public class Activity_Login extends AppCompatActivity {
         login = findViewById(R.id.btn_login);
         forgot_password = findViewById(R.id.forgot_pw);
 
+        //database reference
         mAuth = FirebaseAuth.getInstance();
 
+        //shared preference for check box , remember user
         SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
         String checkbox = preferences.getString("remember","");
         if(checkbox.equals("true"))
@@ -78,6 +80,7 @@ public class Activity_Login extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                // If user is checked checkbox
                 if(buttonView.isChecked())
                 {
                     SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
@@ -87,6 +90,7 @@ public class Activity_Login extends AppCompatActivity {
                     Toast.makeText(Activity_Login.this, "CHECKED", Toast.LENGTH_SHORT).show();
                 }
 
+                // If user is unchecked checkbox
                 else if(!buttonView.isChecked())
                 {
                     SharedPreferences preferences = getSharedPreferences("checkbox",MODE_PRIVATE);
@@ -99,6 +103,7 @@ public class Activity_Login extends AppCompatActivity {
             }
         });
 
+        // button click to user login
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,12 +115,13 @@ public class Activity_Login extends AppCompatActivity {
                     return;
 
                 } else {
-                    loginToUserAccount(email,password);
+                    loginToUserAccount(email,password); // method call for login
                 }
 
             }
         });
 
+        // button click to user registration
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +129,7 @@ public class Activity_Login extends AppCompatActivity {
             }
         });
 
+        // button click to reset password
         forgot_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,14 +139,14 @@ public class Activity_Login extends AppCompatActivity {
         });
     }
 
+    //Validation for password
     private Boolean validatePassword()
     {
         String val = inputPassword.getEditText().getText().toString();
 
         if(val.isEmpty())
         {
-
-            inputPassword.setError("Field cannot be empty");
+            inputPassword.setError("Field cannot be empty"); //Error message
             return false;
         }
         else
@@ -150,13 +157,14 @@ public class Activity_Login extends AppCompatActivity {
         }
     }
 
+    //Validation for username
     private Boolean validateUserName()
     {
         String val = inputEmail.getEditText().getText().toString();
 
         if(val.isEmpty())
         {
-            inputEmail.setError("Field cannot be empty");
+            inputEmail.setError("Field cannot be empty"); //Error message
             return false;
         }
         else
@@ -167,18 +175,22 @@ public class Activity_Login extends AppCompatActivity {
         }
     }
 
+    //function for user login
     private void loginToUserAccount(String email,String password)
     {
         mAuth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        //successful login
                         if(task.isSuccessful())
                         {
                             Intent logIntent = new Intent(Activity_Login.this,Activity_Dashboard.class);
                             startActivity(logIntent);
                         }
 
+                        //Invalid credentials
                         else
                         {
                             Toast.makeText(Activity_Login.this, "Please enter Correct Credentials", Toast.LENGTH_SHORT).show();

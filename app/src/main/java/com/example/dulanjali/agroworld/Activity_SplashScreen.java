@@ -5,15 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 
 import android.os.Bundle;
-import android.util.Pair;
-import android.view.View;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SplashScreen extends AppCompatActivity {
+public class Activity_SplashScreen extends AppCompatActivity {
 
-    SharedPreferences onBoardingScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +19,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashScreen.this,Activity_Login.class));
+                startActivity(new Intent(Activity_SplashScreen.this,Activity_Login.class));
             }
         },5000);
 

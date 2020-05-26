@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -22,17 +21,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.ekn.gruzer.gaugelibrary.HalfGauge;
 import com.example.dulanjali.agroworld.common.Stables;
-import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SoilMoistureActivity extends AppCompatActivity {
+public class Activity_SoilMoisture_Water_Pump extends AppCompatActivity {
 
-
+    //Views
     ToggleButton toggleButton;
     SharedPreferences sharedPreferences;
     PopupMenu popupmenu ;
@@ -40,12 +39,14 @@ public class SoilMoistureActivity extends AppCompatActivity {
     TextView lastData;
     private TextView mTextViewResult;
     private RequestQueue mQueue;
+    HalfGauge lastdata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soil_moisture);
 
+        //link views with xml
         allData = findViewById(R.id.moreData);
         toggleButton = findViewById(R.id.toggleButton);
         lastData = findViewById(R.id.last_data);
@@ -57,6 +58,7 @@ public class SoilMoistureActivity extends AppCompatActivity {
         });
         mTextViewResult = findViewById(R.id.last_data);
         mQueue = Volley.newRequestQueue(this);
+        lastdata = findViewById(R.id.halfGauge);
 
         jsonParse();
 
@@ -87,9 +89,7 @@ public class SoilMoistureActivity extends AppCompatActivity {
 
     private void jsonParse()
     {
-
-
-        RequestQueue requestQueue= Volley.newRequestQueue(SoilMoistureActivity.this);
+        RequestQueue requestQueue= Volley.newRequestQueue(Activity_SoilMoisture_Water_Pump.this);
         StringRequest stringRequest=new StringRequest(Request.Method.GET, new Stables().getSoilDetails(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -97,10 +97,7 @@ public class SoilMoistureActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject=new JSONObject(response);
 
-
                     lastData.setText(jsonObject.getString("value"));
-
-
 
                 }catch(Exception e){
                     e.printStackTrace();
@@ -111,7 +108,7 @@ public class SoilMoistureActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //hide loading
-                Toast.makeText(SoilMoistureActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Activity_SoilMoisture_Water_Pump.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -128,7 +125,7 @@ public class SoilMoistureActivity extends AppCompatActivity {
 
     private void PopMenuDisplay() {
 
-        popupmenu = new PopupMenu(SoilMoistureActivity.this, allData);
+        popupmenu = new PopupMenu(Activity_SoilMoisture_Water_Pump.this, allData);
 
         popupmenu.getMenuInflater().inflate(R.menu.pop_up_menu, popupmenu.getMenu());
 
@@ -136,7 +133,7 @@ public class SoilMoistureActivity extends AppCompatActivity {
 
             public boolean onMenuItemClick(MenuItem item) {
 
-                startActivity(new Intent(SoilMoistureActivity.this,AllSoilMoistureDataActivity.class));
+                startActivity(new Intent(Activity_SoilMoisture_Water_Pump.this, Activity_AllSoilMoistureData.class));
 
                 return true;
             }
@@ -163,7 +160,7 @@ public class SoilMoistureActivity extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     try {
 
-                        Toast.makeText(SoilMoistureActivity.this, "Water Pump On", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Activity_SoilMoisture_Water_Pump.this, "Water Pump On", Toast.LENGTH_SHORT).show();
                         SharedPreferences sharedPreferences=getSharedPreferences("ststus",MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         editor.putString("ststusid","1");
@@ -207,7 +204,7 @@ public class SoilMoistureActivity extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     try {
 
-                        Toast.makeText(SoilMoistureActivity.this, "Water Pump Off", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Activity_SoilMoisture_Water_Pump.this, "Water Pump Off", Toast.LENGTH_SHORT).show();
                         SharedPreferences sharedPreferences=getSharedPreferences("ststus",MODE_PRIVATE);
                         SharedPreferences.Editor editor=sharedPreferences.edit();
                         editor.putString("ststusid","0");

@@ -5,35 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.PopupMenu;
-import android.widget.Toast;
 
 
-import com.example.dulanjali.agroworld.Interface.ItemClickListner;
 import com.example.dulanjali.agroworld.Model.Post;
 import com.example.dulanjali.agroworld.ViewHolder.PostViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.squareup.picasso.Picasso;
 
@@ -42,6 +31,7 @@ import java.util.List;
 
 public class Activity_Blog extends AppCompatActivity {
 
+    // views
     FloatingActionButton addPostbtn;
     private DatabaseReference mDatabase;
     private RecyclerView recyclerView;
@@ -57,18 +47,19 @@ public class Activity_Blog extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__blog);
 
-        addPostbtn= findViewById(R.id.fab);
-
-
-
+        //Firebase Database references
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Posts");
 
-
+        //link views with xml
+        addPostbtn= findViewById(R.id.fab);
         materialSearchBar = (MaterialSearchBar)findViewById(R.id.searchBar);
 
+        //Search bar hint
         materialSearchBar.setHint("Enter Post Title");
 
+        //Search Posts
         materialSearchBar.setCardViewElevation(10);
         materialSearchBar.addTextChangeListener(new TextWatcher() {
             @Override
@@ -111,9 +102,8 @@ public class Activity_Blog extends AppCompatActivity {
 
             }
         });
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Posts");
 
-
+        // button click to add new post
         addPostbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +112,7 @@ public class Activity_Blog extends AppCompatActivity {
             }
         });
 
+        //
         recyclerView = findViewById(R.id.postList);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -131,6 +122,7 @@ public class Activity_Blog extends AppCompatActivity {
 
 
 
+    //Search Posts by post title
     private void startSearch(CharSequence text) {
 
         Query searchByName = mDatabase.orderByChild("title").equalTo(text.toString());
@@ -139,7 +131,7 @@ public class Activity_Blog extends AppCompatActivity {
                 .build();
 
 
-
+        // Load filtered Post in Recycler view
         searchAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull Post model) {
@@ -164,6 +156,7 @@ public class Activity_Blog extends AppCompatActivity {
         recyclerView.setAdapter(searchAdapter);
     }
 
+    // Load all Posts when open the Blog page
     @Override
     protected void onStart() {
         super.onStart();
@@ -205,9 +198,4 @@ public class Activity_Blog extends AppCompatActivity {
         adapter.startListening();
 
     }
-
-
-
-
-
 }

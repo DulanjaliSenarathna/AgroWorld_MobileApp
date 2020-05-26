@@ -11,4 +11,5 @@
     <string name="second_desc">By analyzing past data, you can get an idea of how environmental factors change.</string>
     <string name="third_desc">you can share your ideas with community and also can get knowledge from others.</string>
     <string name="fourth_desc">You can plan and manage your farming with to do list</string>
+    <string name="dash">-</string>
 </resources>

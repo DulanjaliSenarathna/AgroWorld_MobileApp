@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -14,11 +16,11 @@
         android:roundIcon="@drawable/plantt"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AllSoilMoistureDataActivity"></activity>
-        <activity android:name=".MotionDetectionActivity" />
-        <activity android:name=".HumidityDataActivity" />
-        <activity android:name=".TemperatureDataActivity" />
-        <activity android:name=".SoilMoistureActivity" />
+        <activity android:name=".Activity_AllSoilMoistureData"></activity>
+        <activity android:name=".Activity_MotionDetection" />
+        <activity android:name=".Activity_HumidityData" />
+        <activity android:name=".Activity_TemperatureData" />
+        <activity android:name=".Activity_SoilMoisture_Water_Pump" />
         <activity android:name=".Activity_Post" />
         <activity
             android:name=".Activity_ResetPassword"
@@ -27,7 +29,7 @@
         <activity android:name=".Activity_Profile" />
         <activity android:name=".Activity_Dashboard" />
         <activity android:name=".Activity_Register" />
-        <activity android:name=".SplashScreen">
+        <activity android:name=".Activity_SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,6 +44,10 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <service android:name="org.eclipse.paho.android.service.MqttService" >
+        </service>
+
     </application>
 
 </manifest>

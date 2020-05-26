@@ -2,11 +2,16 @@ package com.example.dulanjali.agroworld.Model;
 
 public class Post
 {
+    // variable declaration
     String title,description,image,time,uid,email,uDp,username,pid;
 
-    public Post() {
+    // empty constructor for post class
+    public Post()
+    {
+
     }
 
+    // constructor for post class
     public Post(String title, String description, String image, String time, String uid, String email, String uDp, String username, String pid) {
         this.title = title;
         this.description = description;
@@ -19,6 +24,7 @@ public class Post
         this.pid = pid;
     }
 
+    //getters and setters
     public String getTitle() {
         return title;
     }

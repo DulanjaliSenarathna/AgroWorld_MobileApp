@@ -35,7 +35,7 @@
             android:src="@drawable/add"
             android:layout_marginTop="620dp"
             android:layout_marginLeft="280dp"
-            android:backgroundTint="@color/colorPrimaryDark"/>
+            android:backgroundTint="#4CB7A5"/>
 
     </RelativeLayout>
 

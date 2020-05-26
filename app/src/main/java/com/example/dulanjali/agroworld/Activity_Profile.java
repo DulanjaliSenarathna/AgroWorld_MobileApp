@@ -48,6 +48,7 @@ import static java.security.AccessController.getContext;
 
 public class Activity_Profile extends AppCompatActivity {
 
+    // views
     private CircleImageView displayProfileImage;
     private TextInputLayout fullName,userName, phoneNo;
     private TextView fullNameLabel, userNameLabel;
@@ -56,6 +57,7 @@ public class Activity_Profile extends AppCompatActivity {
     private final static int Gallery_Pick = 1;
     private StorageReference storeProfileImagestorageRef;
 
+    //database references
     private DatabaseReference getUserDataReference;
     private FirebaseAuth mAuth;
     private Uri imageUri;
@@ -69,6 +71,7 @@ public class Activity_Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__profile);
 
+        //link views with xml
         fullName = findViewById(R.id.prof_name);
         userName = findViewById(R.id.prof_usrname);
         phoneNo = findViewById(R.id.prof_phone);
@@ -78,6 +81,7 @@ public class Activity_Profile extends AppCompatActivity {
         btnUpdateProfile = findViewById(R.id.btn_update_prof);
         logout = findViewById(R.id.btn_logout);
 
+        //database reference
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         mAuth = FirebaseAuth.getInstance();
         final String online_user_id = mAuth.getCurrentUser().getUid();
@@ -88,6 +92,7 @@ public class Activity_Profile extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                //Get user data from database
                 User user = dataSnapshot.getValue(User.class);
 
                 String topname = dataSnapshot.child("user_fullname").getValue().toString();
@@ -96,12 +101,14 @@ public class Activity_Profile extends AppCompatActivity {
                 String username = dataSnapshot.child("username").getValue().toString();
                 String phone = dataSnapshot.child("user_phone").getValue().toString();
 
+                // Set user data in views
                 fullNameLabel.setText(topname);
                 userNameLabel.setText(topusername);
                 fullName.getEditText().setText(fullname);
                 userName.getEditText().setText(username);
                 phoneNo.getEditText().setText(phone);
 
+                // load profile image in default image view
                 if (user.getImageURL() != null) {
                     if (user.getImageURL().equals("default")) {
                         displayProfileImage.setImageResource(R.mipmap.ic_launcher);
@@ -119,6 +126,7 @@ public class Activity_Profile extends AppCompatActivity {
             }
         });
 
+        // image click to pick image from gallery and upload it in to the database
         displayProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +136,7 @@ public class Activity_Profile extends AppCompatActivity {
             }
         });
 
+        //button click to logout user
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,6 +145,7 @@ public class Activity_Profile extends AppCompatActivity {
             }
         });
 
+        //button click to update profile
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,6 +204,7 @@ public class Activity_Profile extends AppCompatActivity {
 
     }
 
+    // pick an image from gallery
     private void openImage()
     {
         Intent galleryIntent = new Intent();
@@ -202,6 +213,7 @@ public class Activity_Profile extends AppCompatActivity {
         startActivityForResult(galleryIntent,Gallery_Pick);
     }
 
+    //Set image Uri
     private String getFileExtension(Uri uri)
     {
         ContentResolver contentResolver = getApplicationContext().getContentResolver();
@@ -209,6 +221,7 @@ public class Activity_Profile extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
+    // upload image to firebase storage
     private void uploadImage()
     {
         if(imageUri !=null)
@@ -259,6 +272,7 @@ public class Activity_Profile extends AppCompatActivity {
         }
     }
 
+    // Upload image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {

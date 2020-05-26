@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Activity_ResetPassword extends AppCompatActivity {
 
+    //Views
     TextInputLayout reset_email;
     MaterialButton reset_button;
 
@@ -27,11 +28,13 @@ public class Activity_ResetPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__reset_password);
 
+        //link views with xml
         reset_email = findViewById(R.id.reset_email);
         reset_button = findViewById(R.id.reset_button);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        //button click to send link to Email
         reset_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

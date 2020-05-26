@@ -1,30 +1,27 @@
 package com.example.dulanjali.agroworld;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
-import com.example.dulanjali.agroworld.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import org.eclipse.paho.android.service.MqttAndroidClient;
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 public class Activity_Dashboard extends AppCompatActivity {
 
@@ -35,12 +32,14 @@ public class Activity_Dashboard extends AppCompatActivity {
     private DatabaseReference getUserDataReference;
     private FirebaseUser fuser;
     private FirebaseAuth mAuth;
+    String clientId = MqttClient.generateClientId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__dashboard);
 
+        //Reference to firebase authentication
         mAuth = FirebaseAuth.getInstance();
 
        //link views with xml
@@ -54,6 +53,7 @@ public class Activity_Dashboard extends AppCompatActivity {
         wifi_status = findViewById(R.id.connectionIv);
         wifi_st_txt = findViewById(R.id.connectionTv);
 
+        // image click to check profile details and update profile details
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,42 +72,44 @@ public class Activity_Dashboard extends AppCompatActivity {
             }
         });
 
-
+        // image click to check temperature details
         temperature.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Activity_Dashboard.this,TemperatureDataActivity.class));
+                startActivity(new Intent(Activity_Dashboard.this, Activity_TemperatureData.class));
 
             }
         });
 
+        // image click to check humidity details
         humidity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Activity_Dashboard.this,HumidityDataActivity.class));
+                startActivity(new Intent(Activity_Dashboard.this, Activity_HumidityData.class));
 
             }
         });
 
+        // image click to check soil moisture details and control water pump
         soil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-                startActivity(new Intent(Activity_Dashboard.this,SoilMoistureActivity.class));
+                startActivity(new Intent(Activity_Dashboard.this, Activity_SoilMoisture_Water_Pump.class));
 
             }
         });
 
+        // image click to check motion details
         motion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Activity_Dashboard.this,MotionDetectionActivity.class));
+                startActivity(new Intent(Activity_Dashboard.this, Activity_MotionDetection.class));
 
             }
         });
 
-
+        // image click to add, view and search posts
         blog.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -117,9 +119,37 @@ public class Activity_Dashboard extends AppCompatActivity {
                 }
         );
 
+        mqttConnection();
+
+
     }
 
+    private void mqttConnection()
+    {
+        MqttAndroidClient client =
+                new MqttAndroidClient(this.getApplicationContext(), "tcp://broker.hivemq.com:1883",
+                        clientId);
 
+        try {
+            IMqttToken token = client.connect();
+            token.setActionCallback(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    // We are connected
+                    Toast.makeText(Activity_Dashboard.this, "Success", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    // Something went wrong e.g. connection timeout or firewall problems
+                    Toast.makeText(Activity_Dashboard.this, "Fail", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void checkNetworkConnectionStatus()
     {
@@ -151,18 +181,7 @@ public class Activity_Dashboard extends AppCompatActivity {
 
     }
 
-    private void logOut()
-    {
-        sendToLogin();
-    }
-
-    private void sendToLogin()
-    {
-        Intent intent = new Intent(Activity_Dashboard.this, Activity_Login.class);
-        startActivity(intent);
-        finish();
-    }
-
+    //on start method
     @Override
     protected void onStart() {
         super.onStart();

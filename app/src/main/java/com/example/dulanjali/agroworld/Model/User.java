@@ -2,11 +2,16 @@ package com.example.dulanjali.agroworld.Model;
 
 public class User
 {
+    // variable declaration
     private String username,fullname,email,password,phone,imageURL,uid;
 
-    public User() {
+    // empty constructor for user class
+    public User()
+    {
+
     }
 
+    // constructor for post class
     public User(String username, String fullname, String email, String password, String phone, String imageURL,String uid) {
         this.username = username;
         this.fullname = fullname;
@@ -17,6 +22,7 @@ public class User
         this.uid = uid;
     }
 
+    //getters and setters
     public String getUsername() {
         return username;
     }

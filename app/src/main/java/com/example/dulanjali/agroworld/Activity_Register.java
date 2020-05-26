@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Activity_Register extends AppCompatActivity {
 
+    // Views
     Button btnLogin;
     TextInputLayout inputUserName,inputFullName,inputEmail,inputPhoneNo,inputPassword;
     MaterialButton btnRegister;
@@ -33,6 +34,7 @@ public class Activity_Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__register);
 
+        //link views with xml
         btnLogin = findViewById(R.id.nav_login);
         inputUserName = findViewById(R.id.reg_username);
         inputFullName = findViewById(R.id.reg_fullname);
@@ -43,6 +45,7 @@ public class Activity_Register extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        //button click to register user
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +66,7 @@ public class Activity_Register extends AppCompatActivity {
             }
         });
 
+        //button click to open user login
         btnLogin.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -73,6 +77,7 @@ public class Activity_Register extends AppCompatActivity {
         );
     }
 
+    //Register data send to database
     private void RegisterAccount(final String name, final String fullname, final String email, String password, final String phone )
     {
         mAuth.createUserWithEmailAndPassword(email,password)
@@ -111,6 +116,7 @@ public class Activity_Register extends AppCompatActivity {
 
     }
 
+    ///validations with regular expressions
     private Boolean validateUserName()
     {
         String val = inputUserName.getEditText().getText().toString();

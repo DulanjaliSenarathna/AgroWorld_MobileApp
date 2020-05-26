@@ -1,11 +1,13 @@
 package com.example.dulanjali.agroworld.common;
 
-import android.widget.Toast;
-
 public class Stables {
+
+    // Base Url of API
     public static String baseUrl="http://io.adafruit.com/api/v2/dulanjali/feeds/";
 
-    public String url(){
+    // Url of water pump API
+    public String url()
+    {
         String url="";
         try {
             url=baseUrl+"water-pump/data";
@@ -15,12 +17,17 @@ public class Stables {
         return url;
     }
 
-
-    public String getSoilDetails(){
+    // Url of soil moisture data
+    public String getSoilDetails()
+    {
         return baseUrl+"soil-moisture/data/last";
     }
 
-    public String getRecentDetails(){
+    // Url of last 10 soil moisture data
+    public String getRecentDetails()
+    {
         return baseUrl+"soil-moisture/data?limit=10";
     }
+
+    
 }
