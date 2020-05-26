@@ -29,5 +29,10 @@ public class Stables {
         return baseUrl+"soil-moisture/data?limit=10";
     }
 
-    
+    public String getTemperatureDetails()
+    {
+        return baseUrl+"temperature/data/last";
+    }
+
+
 }

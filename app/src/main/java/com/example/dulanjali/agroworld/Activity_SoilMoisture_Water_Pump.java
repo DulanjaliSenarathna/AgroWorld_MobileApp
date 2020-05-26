@@ -24,6 +24,9 @@ import com.android.volley.toolbox.Volley;
 import com.ekn.gruzer.gaugelibrary.HalfGauge;
 import com.example.dulanjali.agroworld.common.Stables;
 
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -37,7 +40,6 @@ public class Activity_SoilMoisture_Water_Pump extends AppCompatActivity {
     PopupMenu popupmenu ;
     ImageView allData;
     TextView lastData;
-    private TextView mTextViewResult;
     private RequestQueue mQueue;
     HalfGauge lastdata;
 
@@ -56,7 +58,6 @@ public class Activity_SoilMoisture_Water_Pump extends AppCompatActivity {
                 PopMenuDisplay();
             }
         });
-        mTextViewResult = findViewById(R.id.last_data);
         mQueue = Volley.newRequestQueue(this);
         lastdata = findViewById(R.id.halfGauge);
 
@@ -87,6 +88,30 @@ public class Activity_SoilMoisture_Water_Pump extends AppCompatActivity {
 
     }
 
+//    private void jsonParse2() {
+//        String topic = "foo/bar";
+//        int qos = 1;
+//        try {
+//            IMqttToken subToken = client.subscribe(topic, qos);
+//            subToken.setActionCallback(new IMqttActionListener() {
+//                @Override
+//                public void onSuccess(IMqttToken asyncActionToken) {
+//                    // The message was published
+//                }
+//
+//                @Override
+//                public void onFailure(IMqttToken asyncActionToken,
+//                                      Throwable exception) {
+//                    // The subscription could not be performed, maybe the user was not
+//                    // authorized to subscribe on the specified topic e.g. using wildcards
+//
+//                }
+//            });
+//        } catch (MqttException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     private void jsonParse()
     {
         RequestQueue requestQueue= Volley.newRequestQueue(Activity_SoilMoisture_Water_Pump.this);
@@ -97,7 +122,10 @@ public class Activity_SoilMoisture_Water_Pump extends AppCompatActivity {
                 try {
                     JSONObject jsonObject=new JSONObject(response);
 
-                    lastData.setText(jsonObject.getString("value"));
+
+                   //  lastData.setText(jsonObject.getString("value"));
+                    String soilValue = jsonObject.getString("value");
+                    lastdata.setValue((Double.parseDouble(soilValue)/1024)*100);
 
                 }catch(Exception e){
                     e.printStackTrace();

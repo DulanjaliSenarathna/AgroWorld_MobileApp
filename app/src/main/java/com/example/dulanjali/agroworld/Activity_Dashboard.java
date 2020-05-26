@@ -19,9 +19,13 @@ import com.google.firebase.database.DatabaseReference;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 public class Activity_Dashboard extends AppCompatActivity {
 
@@ -126,29 +130,94 @@ public class Activity_Dashboard extends AppCompatActivity {
 
     private void mqttConnection()
     {
-        MqttAndroidClient client =
-                new MqttAndroidClient(this.getApplicationContext(), "tcp://broker.hivemq.com:1883",
+        final MqttAndroidClient client =
+                new MqttAndroidClient(this.getApplicationContext(), "ssl://io.adafruit.com:8883",
                         clientId);
 
         try {
-            IMqttToken token = client.connect();
+
+            MqttConnectOptions options = new MqttConnectOptions();
+            options.setUserName("dulanjali");
+            String aio = "aio_btJp99cUWnF74pM7IoFix0oqNYiA";
+            char[] ch = new char[aio.length()];
+
+            // Copy character by character into array
+            for (int i = 0; i < aio.length(); i++) {
+                ch[i] = aio.charAt(i);
+            }
+            options.setPassword(ch);
+
+            IMqttToken token = client.connect(options);
             token.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     // We are connected
                     Toast.makeText(Activity_Dashboard.this, "Success", Toast.LENGTH_SHORT).show();
+
+                    String topic = "dulanjali/feeds/soil-moisture";
+                    int qos = 1;
+                    try {
+                        IMqttToken subToken = client.subscribe(topic, qos);
+                        subToken.setActionCallback(new IMqttActionListener() {
+                            @Override
+                            public void onSuccess(IMqttToken asyncActionToken) {
+                                // The message was published
+                              //  Toast.makeText(Activity_Dashboard.this, "Subscribed !", Toast.LENGTH_SHORT).show();
+                                showToast();
+
+                            }
+
+                            @Override
+                            public void onFailure(IMqttToken asyncActionToken,
+                                                  Throwable exception) {
+                                exception.printStackTrace();
+                                // The subscription could not be performed, maybe the user was not
+                                // authorized to subscribe on the specified topic e.g. using wildcards
+
+                            }
+                        });
+                    } catch (MqttException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     // Something went wrong e.g. connection timeout or firewall problems
+                    exception.printStackTrace();
                     Toast.makeText(Activity_Dashboard.this, "Fail", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+            client.setCallback(new MqttCallback() {
+                @Override
+                public void connectionLost(Throwable cause) {
+
+                }
+
+                @Override
+                public void messageArrived(String topic, MqttMessage message) throws Exception {
+                    String soilMoistureValue = new String(message.getPayload());
+                    Double valueDoble = Double.parseDouble(soilMoistureValue);
+                    if (valueDoble >= 600) {
+                        Toast.makeText(Activity_Dashboard.this, "Low soil moisture ( "+ valueDoble +" ) detected ... starting the water pump ", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+                @Override
+                public void deliveryComplete(IMqttDeliveryToken token) {
 
                 }
             });
         } catch (MqttException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showToast()
+    {
+        
     }
 
     private void checkNetworkConnectionStatus()
