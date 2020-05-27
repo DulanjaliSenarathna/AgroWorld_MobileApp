@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity_MotionDetection">
+    tools:context=".Activity_All_Temperature">
 
 
     <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart2"
+        android:id="@+id/chart3"
         android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
         />
-
 
 </LinearLayout>

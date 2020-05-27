@@ -8,10 +8,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.dulanjali.agroworld.common.Stables;
 import com.github.mikephil.charting.charts.LineChart;
@@ -30,6 +33,7 @@ import java.util.Map;
 
 public class Activity_AllSoilMoistureData extends AppCompatActivity {
     LineChart soil_data;
+    ArrayList<Entry> dataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +41,15 @@ public class Activity_AllSoilMoistureData extends AppCompatActivity {
         setContentView(R.layout.activity_all_soil_moisture_data);
 
         soil_data = findViewById(R.id.chart1);
-        LineDataSet lineDataSet1 = new LineDataSet(dataValues1(),"Data set 1");
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(lineDataSet1);
 
-        LineData data = new LineData(dataSets);
-        soil_data.setData(data);
-        soil_data.invalidate();
+        try {
+            getRecentData();
 
-        getRecentData();
+
+        } catch (Exception e) {
+
+        }
+
     }
 
     private ArrayList<Entry> dataValues1()
@@ -61,24 +65,35 @@ public class Activity_AllSoilMoistureData extends AppCompatActivity {
 
     }
 
-    private void getRecentData() {
+    private void getRecentData() throws JSONException {
 
-        RequestQueue requestQueue= Volley.newRequestQueue(Activity_AllSoilMoistureData.this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(new Stables().getRecentDetails(), new Response.Listener<JSONArray>() {
+        RequestQueue requestQueue = Volley.newRequestQueue(Activity_AllSoilMoistureData.this);
+        final ArrayList<Entry> dataVals = new ArrayList<Entry>();
+
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, new Stables().geteChartData(), null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray data = (JSONArray) response.get("data");
+                    for (int i = 0; i < data.length() ; i++) {
+                        JSONArray item = data.getJSONArray(i);
+                        String x = (String) item.get(0);
+                        String y = (String) item.get(1);
+                        Float yValue = Float.parseFloat(y);
+                        dataVals.add(new Entry(i,yValue));
 
-
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        JSONObject jsonObject = response.getJSONObject(i);
-
-                        Toast.makeText(Activity_AllSoilMoistureData.this, jsonObject.getString("created_at") +":"+jsonObject.getString("value"), Toast.LENGTH_SHORT).show();
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
+                    dataList = dataVals;
+                    LineDataSet lineDataSet1 = new LineDataSet(dataList,"Soil Moisture");
+                    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                    dataSets.add(lineDataSet1);
 
+                    LineData data1 = new LineData(dataSets);
+                    soil_data.setData(data1);
+                    soil_data.invalidate();
+                    System.out.println(dataList);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
             }

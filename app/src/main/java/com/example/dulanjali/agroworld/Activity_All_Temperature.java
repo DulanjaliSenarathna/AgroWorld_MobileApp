@@ -27,29 +27,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Activity_MotionDetection extends AppCompatActivity {
+public class Activity_All_Temperature extends AppCompatActivity {
 
-    LineChart motion_data;
-    ArrayList<Entry> dataList1 = new ArrayList<>();
+    LineChart prev_temp_data;
+    ArrayList<Entry> dataList2 = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_motion_detection);
+        setContentView(R.layout.activity__all__temperature);
 
-        motion_data = findViewById(R.id.chart2);
+        prev_temp_data = findViewById(R.id.chart3);
 
         try {
-            getRecentMotionData();
+            getRecentTemperatureData();
 
 
         } catch (Exception e) {
 
         }
-
     }
 
-    private ArrayList<Entry> dataValues2()
+    private ArrayList<Entry> dataValues3()
     {
         ArrayList<Entry> dataVals = new ArrayList<Entry>();
         dataVals.add(new Entry(0,20));
@@ -62,12 +61,13 @@ public class Activity_MotionDetection extends AppCompatActivity {
 
     }
 
-    private void getRecentMotionData()
+
+    private void getRecentTemperatureData()
     {
-        RequestQueue requestQueue = Volley.newRequestQueue(Activity_MotionDetection.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Activity_All_Temperature.this);
         final ArrayList<Entry> dataVals = new ArrayList<Entry>();
 
-        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, new Stables().geteMotionData(), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, new Stables().getePrevTempData(), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -80,15 +80,15 @@ public class Activity_MotionDetection extends AppCompatActivity {
                         dataVals.add(new Entry(i,yValue));
 
                     }
-                    dataList1 = dataVals;
-                    LineDataSet lineDataSet1 = new LineDataSet(dataList1,"Motion Time");
+                    dataList2 = dataVals;
+                    LineDataSet lineDataSet1 = new LineDataSet(dataList2,"Temperature");
                     ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                     dataSets.add(lineDataSet1);
 
                     LineData data1 = new LineData(dataSets);
-                    motion_data.setData(data1);
-                    motion_data.invalidate();
-                    System.out.println(dataList1);
+                    prev_temp_data.setData(data1);
+                    prev_temp_data.invalidate();
+                    System.out.println(dataList2);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

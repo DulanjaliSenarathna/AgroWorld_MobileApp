@@ -8,7 +8,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +55,7 @@ public class Activity_Dashboard extends AppCompatActivity {
         soil=findViewById(R.id.imageSoil);
         motion = findViewById(R.id.imageMotion);
         blog = findViewById(R.id.imageBlog);
-        profile = findViewById(R.id.prof_icon);
+        profile = findViewById(R.id.imageProfile);
         check_wifi = findViewById(R.id.imageWifi);
         wifi_status = findViewById(R.id.connectionIv);
         wifi_st_txt = findViewById(R.id.connectionTv);
@@ -154,7 +157,7 @@ public class Activity_Dashboard extends AppCompatActivity {
                     // We are connected
                     Toast.makeText(Activity_Dashboard.this, "Success", Toast.LENGTH_SHORT).show();
 
-                    String topic = "dulanjali/feeds/soil-moisture";
+                    String topic = "dulanjali/feeds/motion";
                     int qos = 1;
                     try {
                         IMqttToken subToken = client.subscribe(topic, qos);
@@ -162,8 +165,8 @@ public class Activity_Dashboard extends AppCompatActivity {
                             @Override
                             public void onSuccess(IMqttToken asyncActionToken) {
                                 // The message was published
-                              //  Toast.makeText(Activity_Dashboard.this, "Subscribed !", Toast.LENGTH_SHORT).show();
-                                showToast();
+                                Toast.makeText(Activity_Dashboard.this, "Subscribed !", Toast.LENGTH_SHORT).show();
+
 
                             }
 
@@ -199,8 +202,9 @@ public class Activity_Dashboard extends AppCompatActivity {
                 public void messageArrived(String topic, MqttMessage message) throws Exception {
                     String soilMoistureValue = new String(message.getPayload());
                     Double valueDoble = Double.parseDouble(soilMoistureValue);
-                    if (valueDoble >= 600) {
-                        Toast.makeText(Activity_Dashboard.this, "Low soil moisture ( "+ valueDoble +" ) detected ... starting the water pump ", Toast.LENGTH_SHORT).show();
+                    if (valueDoble == 1) {
+                        Toast.makeText(Activity_Dashboard.this, "Warning ! Motion detected !", Toast.LENGTH_LONG).show();
+
                     }
 
                 }
@@ -217,7 +221,11 @@ public class Activity_Dashboard extends AppCompatActivity {
 
     private void showToast()
     {
-        
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_layout,(ViewGroup)findViewById(R.id.toast_root));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.TOP,0,0);
+      //  toast.setText( "Low soil moisture ( "+ valueDoble +" ) detected ... starting the water pump ");
     }
 
     private void checkNetworkConnectionStatus()

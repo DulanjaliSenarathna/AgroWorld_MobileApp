@@ -23,16 +23,34 @@ public class Stables {
         return baseUrl+"soil-moisture/data/last";
     }
 
-    // Url of last 10 soil moisture data
-    public String getRecentDetails()
-    {
-        return baseUrl+"soil-moisture/data?limit=10";
-    }
-
     public String getTemperatureDetails()
     {
         return baseUrl+"temperature/data/last";
     }
 
+    public String getHumidityDetails()
+    {
+        return baseUrl+"humidity/data/last";
+    }
 
+    // Url of last 144 hours soil-moisture data
+    public String geteChartData()
+    {
+        return baseUrl + "soil-moisture/data/chart?hours=144&resolution=30";
+    }
+    // Url of last 144 hours motion data
+    public String geteMotionData()
+    {
+        return baseUrl + "motion/data/chart?hours=144&resolution=30";
+    }
+    // Url of last 144 hours temperature data
+    public String getePrevTempData()
+    {
+        return baseUrl + "temperature/data/chart?hours=144&resolution=30";
+    }
+    // Url of last 144 hours humidity data
+    public String getePrevHumData()
+    {
+        return baseUrl + "humidity/data/chart?hours=144&resolution=30";
+    }
 }

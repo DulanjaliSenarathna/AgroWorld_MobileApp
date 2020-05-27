@@ -34,6 +34,10 @@ import java.util.Map;
 
 public class Activity_SoilMoisture_Water_Pump extends AppCompatActivity {
 
+    public Activity_SoilMoisture_Water_Pump() {
+
+    }
+
     //Views
     ToggleButton toggleButton;
     SharedPreferences sharedPreferences;
@@ -87,30 +91,6 @@ public class Activity_SoilMoisture_Water_Pump extends AppCompatActivity {
         });
 
     }
-
-//    private void jsonParse2() {
-//        String topic = "foo/bar";
-//        int qos = 1;
-//        try {
-//            IMqttToken subToken = client.subscribe(topic, qos);
-//            subToken.setActionCallback(new IMqttActionListener() {
-//                @Override
-//                public void onSuccess(IMqttToken asyncActionToken) {
-//                    // The message was published
-//                }
-//
-//                @Override
-//                public void onFailure(IMqttToken asyncActionToken,
-//                                      Throwable exception) {
-//                    // The subscription could not be performed, maybe the user was not
-//                    // authorized to subscribe on the specified topic e.g. using wildcards
-//
-//                }
-//            });
-//        } catch (MqttException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     private void jsonParse()
     {

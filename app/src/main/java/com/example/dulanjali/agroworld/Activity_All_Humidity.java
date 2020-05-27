@@ -27,29 +27,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Activity_MotionDetection extends AppCompatActivity {
+public class Activity_All_Humidity extends AppCompatActivity {
 
-    LineChart motion_data;
-    ArrayList<Entry> dataList1 = new ArrayList<>();
+    LineChart prev_hum_data;
+    ArrayList<Entry> dataList3 = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_motion_detection);
+        setContentView(R.layout.activity__all__humidity);
 
-        motion_data = findViewById(R.id.chart2);
+        prev_hum_data = findViewById(R.id.chart4);
 
         try {
-            getRecentMotionData();
+            getRecentHumidityData();
 
 
         } catch (Exception e) {
 
         }
-
     }
 
-    private ArrayList<Entry> dataValues2()
+    private ArrayList<Entry> dataValues3()
     {
         ArrayList<Entry> dataVals = new ArrayList<Entry>();
         dataVals.add(new Entry(0,20));
@@ -62,12 +61,12 @@ public class Activity_MotionDetection extends AppCompatActivity {
 
     }
 
-    private void getRecentMotionData()
+    private void getRecentHumidityData()
     {
-        RequestQueue requestQueue = Volley.newRequestQueue(Activity_MotionDetection.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Activity_All_Humidity.this);
         final ArrayList<Entry> dataVals = new ArrayList<Entry>();
 
-        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, new Stables().geteMotionData(), null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, new Stables().getePrevHumData(), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -80,15 +79,15 @@ public class Activity_MotionDetection extends AppCompatActivity {
                         dataVals.add(new Entry(i,yValue));
 
                     }
-                    dataList1 = dataVals;
-                    LineDataSet lineDataSet1 = new LineDataSet(dataList1,"Motion Time");
+                    dataList3 = dataVals;
+                    LineDataSet lineDataSet1 = new LineDataSet(dataList3,"Humidity");
                     ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                     dataSets.add(lineDataSet1);
 
                     LineData data1 = new LineData(dataSets);
-                    motion_data.setData(data1);
-                    motion_data.invalidate();
-                    System.out.println(dataList1);
+                    prev_hum_data.setData(data1);
+                    prev_hum_data.invalidate();
+                    System.out.println(dataList3);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

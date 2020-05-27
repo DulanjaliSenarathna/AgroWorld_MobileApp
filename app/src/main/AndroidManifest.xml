@@ -16,7 +16,9 @@
         android:roundIcon="@drawable/plantt"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity_AllSoilMoistureData"></activity>
+        <activity android:name=".Activity_All_Humidity"></activity>
+        <activity android:name=".Activity_All_Temperature" />
+        <activity android:name=".Activity_AllSoilMoistureData" />
         <activity android:name=".Activity_MotionDetection" />
         <activity android:name=".Activity_HumidityData" />
         <activity android:name=".Activity_TemperatureData" />
@@ -45,9 +47,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <service android:name="org.eclipse.paho.android.service.MqttService" >
-        </service>
-
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
     </application>
 
 </manifest>
